@@ -38,6 +38,11 @@ include_dir = { version = "0.7" }
 # view engine i18n
 fluent-templates = { version = "0.8.0", features = ["tera"] }
 unic-langid = { version = "0.9.4" }
+opentelemetry_sdk = "0.28.0"
+opentelemetry = "0.28.0"
+opentelemetry-appender-tracing = "0.28.1"
+opentelemetry-otlp = { version = "0.28.0", features = ["grpc-tonic"] }
+axum-tracing-opentelemetry = "0.26.1"
 # /view engine
 
 [[bin]]
