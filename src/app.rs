@@ -35,7 +35,6 @@ const MODULE_WHITELIST: &[&str] = &[
     "sidekiq",
     "playground",
     "loco_gen",
-    "foo",
 ];
 
 fn get_resource() -> Resource {
@@ -99,11 +98,17 @@ impl Hooks for App {
 
     fn init_logger(config: &Config, _env: &Environment) -> Result<bool> {
         let log_level = &config.logger.level;
+        let log_filter = MODULE_WHITELIST
+            .iter()
+            .map(|m| format!("{m}={log_level}"))
+            .collect::<Vec<_>>()
+            .join(",");
         let logger_provider = init_opentelemetry_logger();
 
         let otel_layer = OpenTelemetryTracingBridge::new(&logger_provider);
 
-        let filter_otel = EnvFilter::new(log_level.to_string())
+        let filter_otel = EnvFilter::new(&log_filter)
+            // specifically don't send logs from these crates because they are spammy
             .add_directive("hyper=off".parse().unwrap())
             .add_directive("opentelemetry=off".parse().unwrap())
             .add_directive("tonic=off".parse().unwrap())
@@ -111,22 +116,11 @@ impl Hooks for App {
             .add_directive("reqwest=off".parse().unwrap());
         let otel_layer = otel_layer.with_filter(filter_otel);
 
-        let filter_fmt = EnvFilter::new(log_level.to_string())
-            .add_directive("opentelemetry=debug".parse().unwrap());
         let fmt_layer = tracing_subscriber::fmt::layer()
             .with_thread_names(true)
-            .with_filter(filter_fmt);
-
-        let api_fmt = EnvFilter::new(
-            MODULE_WHITELIST
-                .iter()
-                .map(|m| format!("{m}={log_level}"))
-                .collect::<Vec<_>>()
-                .join(","),
-        );
+            .with_filter(EnvFilter::new(log_filter));
 
         tracing_subscriber::registry()
-            .with(api_fmt)
             .with(otel_layer)
             .with(fmt_layer)
             .init();
