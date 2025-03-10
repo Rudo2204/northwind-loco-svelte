@@ -1,2 +1,13 @@
 pub mod _entities;
 pub mod users;
+pub mod territories;
+pub mod customers;
+pub mod regions;
+pub mod order_details;
+pub mod products;
+pub mod orders;
+pub mod employeeterritories;
+pub mod shippers;
+pub mod suppliers;
+pub mod categories;
+pub mod employees;
