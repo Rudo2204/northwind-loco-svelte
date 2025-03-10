@@ -2,9 +2,9 @@ use async_trait::async_trait;
 use axum::{Extension, Router as AxumRouter};
 use fluent_templates::{ArcLoader, FluentLoader};
 use loco_rs::{
-    app::{AppContext, Initializer},
-    controller::views::{engines, ViewEngine},
     Error, Result,
+    app::{AppContext, Initializer},
+    controller::views::{ViewEngine, engines},
 };
 use tracing::info;
 
@@ -39,7 +39,7 @@ impl Initializer for ViewEngineInitializer {
             tera_engine
                 .tera
                 .register_function("t", FluentLoader::new(arc));
-            info!("locales loaded");
+            info!("Locales loaded");
         }
 
         Ok(router.layer(Extension(ViewEngine::from(tera_engine))))
