@@ -86,8 +86,10 @@ async fn main() -> loco_rs::Result<()> {
     let test_subscriber = tracing_subscriber::registry()
         .with(tracer_layer)
         .with(
-            init_tracing_opentelemetry::tracing_subscriber_ext::build_level_filter_layer("")
-                .unwrap(),
+            init_tracing_opentelemetry::tracing_subscriber_ext::build_level_filter_layer(
+                &log_filter,
+            )
+            .unwrap(),
         )
         .with(otel_layer)
         .with(fmt_layer);
