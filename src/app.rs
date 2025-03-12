@@ -60,13 +60,8 @@ impl Hooks for App {
         Ok(router)
     }
 
-    // fn middlewares(ctx: &AppContext) -> Vec<Box<dyn MiddlewareLayer>> {
-    //     middleware::default_middleware_stack(ctx)
-    // }
-
     fn init_logger(_config: &Config, _env: &Environment) -> Result<bool> {
-        // let _guard =
-        //     init_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers().unwrap();
+        // default logger is not compatible with opentelemetry logger
         Ok(true)
     }
 
