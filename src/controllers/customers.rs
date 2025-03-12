@@ -7,8 +7,9 @@ use tokio::time::{Duration, sleep};
 
 #[debug_handler]
 pub async fn index(State(_ctx): State<AppContext>) -> Result<impl IntoResponse> {
+    tracing::debug!("this is a debug message to test configured yaml setup");
     do_stuff().await;
-    explosion().await;
+    explosion().await?;
     Ok("OK")
 }
 
@@ -22,8 +23,23 @@ pub async fn do_stuff() {
 }
 
 #[tracing::instrument]
-pub async fn explosion() {
-    assert_eq!(1 + 1, 3);
+pub async fn explosion() -> Result<String, Error> {
+    let foobar = match std::env::var("FOOBAR") {
+        Ok(var) => {
+            tracing::info!(foobar = var, "happy path got FOOBAR var");
+            var
+        }
+        Err(err) => {
+            tracing::error!(
+                error.source = std::error::Error::source(&err),
+                error.msg = err.to_string(),
+                "did not find my FOOBAR var"
+            );
+            return Err(Error::msg(err));
+        }
+    };
+
+    Ok(foobar)
 }
 
 pub fn routes() -> Routes {
