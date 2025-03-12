@@ -1,4 +1,6 @@
 use async_trait::async_trait;
+use axum::routing::Router as AxumRouter;
+use axum_tracing_opentelemetry::middleware::{OtelAxumLayer, OtelInResponseLayer};
 use loco_rs::{
     Result,
     app::{AppContext, Hooks, Initializer},
@@ -6,59 +8,17 @@ use loco_rs::{
     boot::{BootResult, StartMode, create_app},
     config::Config,
     controller::AppRoutes,
-    controller::middleware::{self, MiddlewareLayer},
     db::{self, truncate_table},
     environment::Environment,
     task::Tasks,
 };
 use migration::Migrator;
 use std::path::Path;
-use std::sync::OnceLock;
-use tracing_subscriber::{EnvFilter, Layer, layer::SubscriberExt, util::SubscriberInitExt};
-
-use opentelemetry_appender_tracing::layer::OpenTelemetryTracingBridge;
-use opentelemetry_otlp::LogExporter;
-use opentelemetry_sdk::Resource;
-use opentelemetry_sdk::logs::SdkLoggerProvider;
 
 #[allow(unused_imports)]
 use crate::{
     controllers, initializers, models::_entities::users, tasks, workers::downloader::DownloadWorker,
 };
-
-const MODULE_WHITELIST: &[&str] = &[
-    env!("CARGO_CRATE_NAME"),
-    "loco_rs",
-    "sea_orm_migration",
-    "tower_http",
-    "sqlx::query",
-    "sidekiq",
-    "playground",
-    "loco_gen",
-];
-
-fn get_resource() -> Resource {
-    static RESOURCE: OnceLock<Resource> = OnceLock::new();
-    RESOURCE
-        .get_or_init(|| {
-            Resource::builder()
-                .with_service_name(env!("CARGO_CRATE_NAME"))
-                .build()
-        })
-        .clone()
-}
-
-fn init_opentelemetry_logger() -> SdkLoggerProvider {
-    let exporter = LogExporter::builder()
-        .with_tonic()
-        .build()
-        .expect("Failed to create log exporter");
-
-    SdkLoggerProvider::builder()
-        .with_resource(get_resource())
-        .with_batch_exporter(exporter)
-        .build()
-}
 
 pub struct App;
 #[async_trait]
@@ -87,45 +47,26 @@ impl Hooks for App {
 
     async fn initializers(_ctx: &AppContext) -> Result<Vec<Box<dyn Initializer>>> {
         Ok(vec![
-            Box::new(initializers::opentelemetry::OpenTelemetryInitializer),
+            // Box::new(loco_extras::initializers::opentelemetry::OpenTelemetryInitializer),
+            // Box::new(initializers::opentelemetry::OpenTelemetryInitializer),
             Box::new(initializers::view_engine::ViewEngineInitializer),
         ])
     }
 
-    fn middlewares(ctx: &AppContext) -> Vec<Box<dyn MiddlewareLayer>> {
-        middleware::default_middleware_stack(ctx)
+    async fn after_routes(router: AxumRouter, _ctx: &AppContext) -> Result<AxumRouter> {
+        let router = router
+            .layer(OtelInResponseLayer::default())
+            .layer(OtelAxumLayer::default());
+        Ok(router)
     }
 
-    fn init_logger(config: &Config, _env: &Environment) -> Result<bool> {
-        let log_level = &config.logger.level;
-        let log_filter = MODULE_WHITELIST
-            .iter()
-            .map(|m| format!("{m}={log_level}"))
-            .collect::<Vec<_>>()
-            .join(",");
-        let logger_provider = init_opentelemetry_logger();
+    // fn middlewares(ctx: &AppContext) -> Vec<Box<dyn MiddlewareLayer>> {
+    //     middleware::default_middleware_stack(ctx)
+    // }
 
-        let otel_layer = OpenTelemetryTracingBridge::new(&logger_provider);
-
-        let filter_otel = EnvFilter::new(&log_filter)
-            // specifically don't send logs from these crates because they are spammy
-            .add_directive("hyper=off".parse().unwrap())
-            .add_directive("opentelemetry=off".parse().unwrap())
-            .add_directive("tonic=off".parse().unwrap())
-            .add_directive("h2=off".parse().unwrap())
-            .add_directive("reqwest=off".parse().unwrap());
-        let otel_layer = otel_layer.with_filter(filter_otel);
-
-        let fmt_layer = tracing_subscriber::fmt::layer()
-            .with_thread_names(true)
-            .with_filter(EnvFilter::new(log_filter));
-
-        tracing_subscriber::registry()
-            .with(otel_layer)
-            .with(fmt_layer)
-            .init();
-
-        tracing::info!("Opentelemetry logger initialized");
+    fn init_logger(_config: &Config, _env: &Environment) -> Result<bool> {
+        // let _guard =
+        //     init_tracing_opentelemetry::tracing_subscriber_ext::init_subscribers().unwrap();
         Ok(true)
     }
 
