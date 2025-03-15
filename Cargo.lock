@@ -549,24 +549,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "axum-tracing-opentelemetry"
-version = "0.26.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "248d7a5925bf89cc9997882d3d0768061477c9b5998959fcebaa5bf8ba4d50dc"
-dependencies = [
- "axum 0.8.1",
- "futures-core",
- "futures-util",
- "http",
- "opentelemetry",
- "pin-project-lite",
- "tower 0.5.2",
- "tracing",
- "tracing-opentelemetry",
- "tracing-opentelemetry-instrumentation-sdk",
-]
-
-[[package]]
 name = "backon"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2631,8 +2613,7 @@ dependencies = [
 [[package]]
 name = "loco-gen"
 version = "0.14.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ec8762a66ade27c5157288ca46db51a77bbd95cb2d7ad87bcaada9621e3a4d9"
+source = "git+https://github.com/Rudo2204/loco.git?branch=v0.14.1-otel#189a227d9310073e4d39d1da75d79af44c711a77"
 dependencies = [
  "chrono",
  "clap",
@@ -2651,8 +2632,7 @@ dependencies = [
 [[package]]
 name = "loco-rs"
 version = "0.14.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "19decee5529e36ffd3e22f83cf601c1fcb35a8932886fc33c19e8482bc1baf88"
+source = "git+https://github.com/Rudo2204/loco.git?branch=v0.14.1-otel#189a227d9310073e4d39d1da75d79af44c711a77"
 dependencies = [
  "argon2",
  "async-trait",
@@ -2904,7 +2884,6 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "axum 0.8.1",
- "axum-tracing-opentelemetry",
  "chrono",
  "fluent-templates",
  "include_dir",
@@ -3096,6 +3075,7 @@ dependencies = [
  "opentelemetry",
  "tracing",
  "tracing-core",
+ "tracing-opentelemetry",
  "tracing-subscriber",
 ]
 
@@ -5673,18 +5653,6 @@ dependencies = [
  "tracing-log",
  "tracing-subscriber",
  "web-time",
-]
-
-[[package]]
-name = "tracing-opentelemetry-instrumentation-sdk"
-version = "0.26.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3cae2c7a01582abc7b0a4672f92c47411b69cd3967b8b79bb743d5d0991c9089"
-dependencies = [
- "http",
- "opentelemetry",
- "tracing",
- "tracing-opentelemetry",
 ]
 
 [[package]]
