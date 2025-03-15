@@ -81,7 +81,14 @@ async fn main() -> loco_rs::Result<()> {
         .with_line_number(true)
         .with_thread_names(true)
         .with_span_events(FmtSpan::NEW | FmtSpan::CLOSE)
-        .with_filter(EnvFilter::new(&log_filter));
+        .with_filter(
+            EnvFilter::new(&log_filter).add_directive(
+                // middleware logger creates an ERROR span to propgate data therefore is super spammy
+                "loco_rs::controller::middleware::logger=off"
+                    .parse()
+                    .unwrap(),
+            ),
+        );
 
     let test_subscriber = tracing_subscriber::registry()
         .with(tracer_layer)
