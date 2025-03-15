@@ -1,6 +1,4 @@
 use async_trait::async_trait;
-use axum::routing::Router as AxumRouter;
-use axum_tracing_opentelemetry::middleware::{OtelAxumLayer, OtelInResponseLayer};
 use loco_rs::{
     Result,
     app::{AppContext, Hooks, Initializer},
@@ -51,13 +49,6 @@ impl Hooks for App {
             // Box::new(initializers::opentelemetry::OpenTelemetryInitializer),
             Box::new(initializers::view_engine::ViewEngineInitializer),
         ])
-    }
-
-    async fn after_routes(router: AxumRouter, _ctx: &AppContext) -> Result<AxumRouter> {
-        let router = router
-            .layer(OtelInResponseLayer::default())
-            .layer(OtelAxumLayer::default());
-        Ok(router)
     }
 
     fn init_logger(_config: &Config, _env: &Environment) -> Result<bool> {
