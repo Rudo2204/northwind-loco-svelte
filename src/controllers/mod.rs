@@ -1,4 +1,5 @@
 pub mod auth;
+pub mod customers;
 
-pub mod customers;mod utils;
+mod utils;
 pub use utils::*;
