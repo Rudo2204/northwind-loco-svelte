@@ -2613,7 +2613,7 @@ dependencies = [
 [[package]]
 name = "loco-gen"
 version = "0.14.1"
-source = "git+https://github.com/Rudo2204/loco.git?branch=v0.14.1-otel#189a227d9310073e4d39d1da75d79af44c711a77"
+source = "git+https://github.com/Rudo2204/loco.git?branch=v0.14.1-otel-total-items#8d07794a4a028fee9e0f4c5bb6d269b6985ec877"
 dependencies = [
  "chrono",
  "clap",
@@ -2632,7 +2632,7 @@ dependencies = [
 [[package]]
 name = "loco-rs"
 version = "0.14.1"
-source = "git+https://github.com/Rudo2204/loco.git?branch=v0.14.1-otel#189a227d9310073e4d39d1da75d79af44c711a77"
+source = "git+https://github.com/Rudo2204/loco.git?branch=v0.14.1-otel-total-items#8d07794a4a028fee9e0f4c5bb6d269b6985ec877"
 dependencies = [
  "argon2",
  "async-trait",

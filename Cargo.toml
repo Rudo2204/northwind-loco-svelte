@@ -10,7 +10,7 @@ default-run = "northwind_loco_svelte-cli"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace.dependencies]
-loco-rs = { git = "https://github.com/Rudo2204/loco.git", branch = "v0.14.1-otel" }
+loco-rs = { git = "https://github.com/Rudo2204/loco.git", branch = "v0.14.1-otel-total-items" }
 # loco-rs = { version = "0.14.1" }
 
 [dependencies]
