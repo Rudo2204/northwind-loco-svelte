@@ -1,4 +1,4 @@
-import type { BaseCollectionResponse } from '../baseCollectionResponse';
+import type { BaseCollectionResponse } from '$lib/shared/responses';
 import { NORTHWIND_API_URL } from '$env/static/private';
 
 import type { EmployeeResponse } from '$lib/shared/responses';
