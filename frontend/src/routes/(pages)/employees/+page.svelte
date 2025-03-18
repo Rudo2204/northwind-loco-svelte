@@ -5,7 +5,6 @@
 
 <div class="overflow-x-auto">
   <table class="table">
-    <!-- head -->
     <thead>
       <tr>
         <th>Name</th>
@@ -22,7 +21,7 @@
               <div class="avatar">
                 <div class="mask mask-squircle h-12 w-12">
                   <img
-                    src={`data:image/png;base64, ${btoa(String.fromCharCode.apply(null, new Uint8Array(employee.photo)))}`}
+                    src={`data:image/png;base64, ${btoa(String.fromCharCode(...employee.photo))}`}
                     alt={`${employee.firstname} ${employee.lastname}`}
                   />
                 </div>
