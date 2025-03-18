@@ -1,3 +1,5 @@
+import type { BaseCollectionResponse } from '../baseCollectionResponse';
+
 export interface EmployeeResponse {
   employeeid: number;
   lastname: string;
@@ -20,3 +22,5 @@ export interface EmployeeResponse {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface EmployeeCollectionResponse extends BaseCollectionResponse<EmployeeResponse> {}
