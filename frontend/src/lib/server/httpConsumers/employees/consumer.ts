@@ -1,15 +1,11 @@
-import type { BaseCollectionResponse } from '$lib/shared/responses';
+import type { EmployeeCollectionResponse, EmployeeResponse } from '$lib/shared/responses';
 import { NORTHWIND_API_URL } from '$env/static/private';
 
-import type { EmployeeResponse } from '$lib/shared/responses';
-
 export abstract class EmployeeConsumer {
-  public static async getEmployeeCollection(
-    query?: string
-  ): Promise<BaseCollectionResponse<EmployeeResponse>> {
+  public static async getEmployeeCollection(query?: string): Promise<EmployeeCollectionResponse> {
     const endpoint = `${NORTHWIND_API_URL}employees${query}`;
     const response = await fetch(endpoint);
-    const employees: BaseCollectionResponse<EmployeeResponse> = await response.json();
+    const employees: EmployeeCollectionResponse = await response.json();
     return employees;
   }
 
