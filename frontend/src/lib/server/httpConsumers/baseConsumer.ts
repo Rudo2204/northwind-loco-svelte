@@ -53,13 +53,13 @@ export class BaseConsumer {
     } as BaseResponse<T>;
   }
 
-  async getList<T>(query?: string): Promise<BaseResponse<T>> {
+  async baseGetList<T>(query?: string): Promise<BaseResponse<T>> {
     const endpoint = `${this.apiUrl}${this.listEndpoint}${query}`;
     const response = await this.get(endpoint);
     return this.handleResponse(response);
   }
 
-  async getItem<T>(id: number): Promise<BaseResponse<T>> {
+  async baseGetOne<T>(id: number): Promise<BaseResponse<T>> {
     const endpoint = `${this.apiUrl}${this.itemEndpoint}/${id}`;
     const response = await this.get(endpoint);
     return this.handleResponse(response);
