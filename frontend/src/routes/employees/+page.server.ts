@@ -1,5 +1,4 @@
 import type { PageServerLoad } from './$types';
-import { json } from '@sveltejs/kit';
 import { PaginationQueries } from '$lib/shared/queries';
 import { EmployeeConsumer, throwOrReturnResults } from '$lib/server/httpConsumers';
 import { SeoDataDto } from '$lib/shared/dtos';
