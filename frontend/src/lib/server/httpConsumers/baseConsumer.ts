@@ -59,8 +59,8 @@ export class BaseConsumer {
     return this.handleResponse(response);
   }
 
-  async baseGetOne<T>(id: number): Promise<BaseResponse<T>> {
-    const endpoint = `${this.apiUrl}${this.itemEndpoint}/${id}`;
+  async baseGetOne<T>(slug: string): Promise<BaseResponse<T>> {
+    const endpoint = `${this.apiUrl}${this.itemEndpoint}/${slug}`;
     const response = await this.get(endpoint);
     return this.handleResponse(response);
   }
