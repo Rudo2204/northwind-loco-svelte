@@ -1,18 +1,16 @@
 import type { PageServerLoad } from './$types';
-import type { EmployeeCollectionResponse } from '$lib/shared/responses';
 import { PaginationQueries } from '$lib/shared/queries';
+import { EmployeeConsumer, throwOrReturnResults } from '$lib/server/httpConsumers';
 
-export const load: PageServerLoad = async ({ fetch, url }) => {
-  const employees = await PageHelper.getEmployees(fetch, url.searchParams);
+export const load: PageServerLoad = async ({ url }) => {
+  const { data: employees } = await PageHelper.getEmployees(url.searchParams);
   return { employees };
 };
 
 abstract class PageHelper {
-  static async getEmployees(fetch: any, search?: URLSearchParams) {
+  static async getEmployees(search?: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
-    const response = await fetch('/api/v1/employees' + query);
-    const parsedResponse: EmployeeCollectionResponse = await response.json();
-
-    return parsedResponse;
+    const response = await new EmployeeConsumer().getList(query);
+    return throwOrReturnResults(response);
   }
 }
