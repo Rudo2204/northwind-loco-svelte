@@ -5,4 +5,4 @@
 </script>
 
 <Navbar />
-<Sidebar {children} />
+<Sidebar>{@render children()}</Sidebar>
