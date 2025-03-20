@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { SeoHead } from '$lib/components';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
 </script>
 
+<SeoHead componentData={data.seoData} />
 <div class="overflow-x-auto">
   <table class="table">
     <thead>
@@ -14,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each data.employees.results as employee}
+      {#each data.employees!.results as employee}
         <tr>
           <td>
             <div class="flex items-center gap-3">
