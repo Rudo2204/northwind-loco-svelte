@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { PageProps } from './$types';
-  let { data }: PageProps = $props();
+  import type { PageData } from './$types';
+  const { data }: { data: PageData } = $props();
 </script>
 
 <div class="overflow-x-auto">
