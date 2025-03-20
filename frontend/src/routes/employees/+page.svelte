@@ -28,7 +28,7 @@
                   />
                 </div>
               </div>
-              <a href="/employee/{employee.employeeid}">
+              <a href="/employees/{employee.employeeid}">
                 <div>
                   <div class="font-bold">{employee.firstname} {employee.lastname}</div>
                   <div class="text-sm opacity-50">{employee.city}, {employee.country}</div>
