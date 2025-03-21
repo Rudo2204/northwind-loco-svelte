@@ -5,7 +5,12 @@ import { SeoDataDto } from '$lib/shared/dtos';
 export const load: PageServerLoad = async ({ url, params }) => {
   const { data: employee } = await PageHelper.getEmployee(params.employeeid);
   const seoDataDto = new SeoDataDto('Northwind Traders Employee', url.href, url.href);
-  return { employee, seoData: { ...seoDataDto } };
+  let reportsToEmployee;
+  if (employee!.reportsto) {
+    const { data } = await PageHelper.getEmployee(String(employee!.reportsto));
+    reportsToEmployee = data;
+  }
+  return { employee, reportsToEmployee, seoData: { ...seoDataDto } };
 };
 
 abstract class PageHelper {
