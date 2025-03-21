@@ -1,4 +1,4 @@
-<div class="navbar bg-base-200 shadow-sm">
+<div class="navbar bg-base-300 shadow-sm">
   <div class="flex-1">
     <div class="text-2xl">
       <a href="/">
