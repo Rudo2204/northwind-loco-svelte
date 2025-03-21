@@ -18,11 +18,9 @@
   <div class="drawer-content m-12">
     {@render children()}
   </div>
-  <div class="drawer-side">
+  <div>
     <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-    <aside
-      class={`menu bg-base-200 text-base-content min-h-full p-4 ${isSidebarExpanded ? 'w-60' : ''}`}
-    >
+    <aside class={`menu text-base-content p-4 ${isSidebarExpanded ? 'w-60' : ''}`}>
       <div class={`flex ${isSidebarExpanded ? 'justify-end' : 'justify-center'}`}>
         <button
           class="btn btn-ghost btn-square"
