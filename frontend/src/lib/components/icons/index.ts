@@ -6,3 +6,4 @@ export { default as InboxStackIcon } from './InboxStackIcon.svelte';
 export { default as ShoppingBagIcon } from './ShoppingBagIcon.svelte';
 export { default as ShoppingCartIcon } from './ShoppingCartIcon.svelte';
 export { default as UsersIcon } from './UsersIcon.svelte';
+export { default as MagnifyingGlassIcon } from './MagnifyingGlassIcon.svelte';
