@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ThemeSelect } from '$lib/components';
+  import { MagnifyingGlassIcon } from '$lib/components/icons';
 </script>
 
 <div class="navbar bg-base-300 shadow-sm">
@@ -10,8 +11,15 @@
       </a>
     </div>
   </div>
-  <div class="flex-auto">
-    <input type="text" placeholder="Search" class="input input-bordered w-160" />
+  <div class="join flex-auto">
+    <div>
+      <input
+        type="text"
+        placeholder="Search"
+        class="input input-bordered w-120 focus:outline-none"
+      />
+    </div>
+    <button class="btn btn-neutral join-item"><MagnifyingGlassIcon /></button>
   </div>
   <div class="flex gap-2">
     <ThemeSelect />
