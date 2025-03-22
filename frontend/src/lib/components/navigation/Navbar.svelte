@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { ThemeSelect } from '$lib/components';
+</script>
+
 <div class="navbar bg-base-300 shadow-sm">
   <div class="flex-1">
     <div class="text-2xl">
@@ -6,8 +10,11 @@
       </a>
     </div>
   </div>
+  <div class="flex-auto">
+    <input type="text" placeholder="Search" class="input input-bordered w-160" />
+  </div>
   <div class="flex gap-2">
-    <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+    <ThemeSelect />
     <div class="dropdown dropdown-end">
       <div tabindex="0" role="button" class="btn btn-ghost">
         <svg
