@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ThemeSelect } from '$lib/components';
   import { MagnifyingGlassIcon } from '$lib/components/icons';
+  import { toast } from 'svelte-sonner';
 </script>
 
 <div class="navbar bg-base-300 shadow-sm">
@@ -19,7 +20,12 @@
         class="input input-bordered w-120 focus:outline-none"
       />
     </div>
-    <button class="btn btn-neutral join-item"><MagnifyingGlassIcon /></button>
+    <button
+      class="btn btn-neutral join-item"
+      onclick={() => toast.error("This button doesn't work yet.")}
+    >
+      <MagnifyingGlassIcon />
+    </button>
   </div>
   <div class="flex gap-2">
     <ThemeSelect />
