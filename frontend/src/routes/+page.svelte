@@ -1,3 +1,10 @@
+<script lang="ts">
+  import { SeoHead } from '$lib/components';
+  import type { PageData } from './$types';
+  const { data }: { data: PageData } = $props();
+</script>
+
+<SeoHead componentData={data.seoData} />
 <h1>Welcome to SvelteKit</h1>
 <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
 <button class="btn">Neutral</button>
