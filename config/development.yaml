@@ -26,6 +26,8 @@ server:
   middlewares:
     fallback:
       enable: false
+    cors:
+      enable: true
     static:
       enable: true
       must_exist: true
