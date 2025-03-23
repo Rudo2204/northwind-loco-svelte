@@ -7,3 +7,6 @@ export { default as ShoppingBagIcon } from './ShoppingBagIcon.svelte';
 export { default as ShoppingCartIcon } from './ShoppingCartIcon.svelte';
 export { default as UsersIcon } from './UsersIcon.svelte';
 export { default as MagnifyingGlassIcon } from './MagnifyingGlassIcon.svelte';
+export { default as ChevronDownIcon } from './ChevronDownIcon.svelte';
+export { default as ChevronLeftIcon } from './ChevronLeftIcon.svelte';
+export { default as ChevronRightIcon } from './ChevronRightIcon.svelte';
