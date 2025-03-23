@@ -1,35 +1,24 @@
 <script lang="ts">
-  import { SeoHead } from '$lib/components';
+  import { SeoHead, Table } from '$lib/components';
+  import type { SupplierResponse } from '$lib/shared/responses';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
 </script>
 
+{#snippet row(supplier: SupplierResponse)}
+  <td class="hrefa">
+    <a href="/suppliers/{supplier.supplierid}">
+      {supplier.companyname}
+    </a>
+  </td>
+  <td>{supplier.contactname}</td>
+  <td>{supplier.contacttitle}</td>
+  <td>{supplier.city}</td>
+  <td>{supplier.country}</td>{/snippet}
+
 <SeoHead componentData={data.seoData} />
-<div class="overflow-x-auto">
-  <table class="table">
-    <thead class="bg-base-300">
-      <tr>
-        <th>Company</th>
-        <th>Contact</th>
-        <th>Title</th>
-        <th>City</th>
-        <th>Country</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each data.suppliers!.results as supplier}
-        <tr class="hover:bg-primary/10">
-          <td class="hrefa">
-            <a href="/suppliers/{supplier.supplierid}">
-              {supplier.companyname}
-            </a>
-          </td>
-          <td>{supplier.contactname}</td>
-          <td>{supplier.contacttitle}</td>
-          <td>{supplier.city}</td>
-          <td>{supplier.country}</td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
-</div>
+<Table
+  data={data.suppliers!.results}
+  header={['company', 'contact', 'title', 'city', 'country']}
+  {row}
+/>
