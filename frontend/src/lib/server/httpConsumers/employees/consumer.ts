@@ -3,8 +3,7 @@ import { BaseConsumer } from '../baseConsumer';
 import type { EmployeeCollectionResponse, EmployeeResponse } from '$lib/shared/responses';
 
 export class EmployeeConsumer extends BaseConsumer {
-  listEndpoint = 'employees';
-  itemEndpoint = 'employees';
+  resource = 'employees';
 
   async getList(query?: string) {
     return this.baseGetList<EmployeeCollectionResponse>(query);

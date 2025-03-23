@@ -5,8 +5,7 @@ import { NORTHWIND_API_URL } from '$env/static/private';
 
 export class BaseConsumer {
   apiUrl?: string;
-  listEndpoint?: string;
-  itemEndpoint?: string;
+  resource?: string;
 
   constructor(apiUrl?: string) {
     this.apiUrl = apiUrl || NORTHWIND_API_URL;
@@ -54,13 +53,13 @@ export class BaseConsumer {
   }
 
   async baseGetList<T>(query?: string): Promise<BaseResponse<T>> {
-    const endpoint = `${this.apiUrl}${this.listEndpoint}${query}`;
+    const endpoint = `${this.apiUrl}${this.resource}${query}`;
     const response = await this.get(endpoint);
     return this.handleResponse(response);
   }
 
   async baseGetOne<T>(slug: string): Promise<BaseResponse<T>> {
-    const endpoint = `${this.apiUrl}${this.itemEndpoint}/${slug}`;
+    const endpoint = `${this.apiUrl}${this.resource}/${slug}`;
     const response = await this.get(endpoint);
     return this.handleResponse(response);
   }
