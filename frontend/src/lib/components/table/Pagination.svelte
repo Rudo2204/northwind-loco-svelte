@@ -1,11 +1,9 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { goto } from '$app/navigation';
   import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons';
   import { SiteOptions } from '$lib/configs/siteOptions';
 
-  // TODO: don't render all of the pages but only something like 1 2 3 ... 4 5 6
-  //const maxPaginationPages = 7;
-  //const maxPaginationPagesPerSide = 3;
   let rowsPerPageOptions = [5, 10, 15, 25, 50, 100];
 
   let { paginationData } = $props();
@@ -72,14 +70,14 @@
     return pageItems;
   }
 
-  function getHref(
-    newPage: number = paginationData.page,
-    newPageSize: number = currentPerPage
-  ): string {
+  function gotoHref(newPage: number = paginationData.page, newPageSize: number = currentPerPage) {
     let searchParams = page.url.searchParams;
     searchParams.set('page_size', String(newPageSize));
     searchParams.set('page', String(newPage));
-    return `${page.url.pathname}?${searchParams.toString()}`;
+    const href = `${page.url.pathname}?${searchParams.toString()}`;
+    // this is a dumb way to force sveltekit to re-run `load` function of the page
+    // without this sometimes it doesn't work because the underlying route does not change (only params change)
+    goto(href, { invalidateAll: true });
   }
 </script>
 
@@ -99,9 +97,9 @@
     <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-10 p-2 shadow-sm">
       {#each rowsPerPageOptions as newPerPageOption}
         <li>
-          <a href={getHref(undefined, newPerPageOption)} class="btn btn-ghost">
+          <button onclick={() => gotoHref(undefined, newPerPageOption)} class="btn btn-ghost">
             {newPerPageOption}
-          </a>
+          </button>
         </li>
       {/each}
     </ul>
@@ -109,22 +107,22 @@
 
   {#if paginationData.total_pages > 1}
     <div data-sveltekit-reload class="join ml-3">
-      <a
+      <button
         class={`btn btn-ghost ${paginationData.page == 1 && 'btn-disabled'}`}
-        href={getHref(paginationData.page - 1)}
+        onclick={() => gotoHref(paginationData.page - 1)}
       >
         <div class="size-3">
           <ChevronLeftIcon />
         </div>
-      </a>
+      </button>
       {#each getPageItems(paginationData.page, paginationData.total_pages) as currentPage}
         {#if currentPage > 0}
-          <a
-            href={getHref(currentPage, currentPerPage)}
+          <button
+            onclick={() => gotoHref(currentPage, currentPerPage)}
             class={`join-item btn ${currentPage == paginationData.page && 'btn-active'}`}
           >
             {currentPage}
-          </a>
+          </button>
         {:else}
           <div class="dropdown dropdown-end animation-none">
             <div tabindex="0" role="button" class="btn animation-none">...</div>
@@ -146,9 +144,9 @@
                       title={`Must be between be 1 to ${paginationData.total_pages}`}
                     />
                   </div>
-                  <a data-sveltekit-reload href={getHref(goPage)} class="btn btn-neutral join-item"
-                    >Go</a
-                  >
+                  <button onclick={() => gotoHref(goPage)} class="btn btn-neutral join-item">
+                    Go
+                  </button>
                 </div>
               </li>
             </ul>
@@ -156,14 +154,14 @@
         {/if}
       {/each}
 
-      <a
-        href={getHref(paginationData.page + 1)}
+      <button
+        onclick={() => gotoHref(paginationData.page + 1)}
         class={`btn btn-ghost ${paginationData.page == paginationData.total_pages && 'btn-disabled'}`}
       >
         <div class="size-3">
           <ChevronRightIcon />
         </div>
-      </a>
+      </button>
     </div>
   {/if}
 </div>
