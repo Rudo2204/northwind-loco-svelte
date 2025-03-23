@@ -57,7 +57,7 @@
   </div>
 
   {#if paginationData.total_pages > 1}
-    <div class="join ml-3">
+    <div data-sveltekit-reload class="join ml-3">
       <a
         class={`btn btn-ghost ${paginationData.page == 1 && 'btn-disabled'}`}
         href={getHref(paginationData.page - 1)}
