@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons';
   import { SiteOptions } from '$lib/configs/siteOptions';
 
@@ -14,23 +15,20 @@
       ? paginationData.page
       : 1 + paginationData.page_size * (paginationData.page - 1)
   );
-  const currentPageLastItem = paginationData.page_size * paginationData.page + 1;
   let to = $derived(
-    currentPageLastItem > paginationData.total_items
+    paginationData.page_size * paginationData.page + 1 > paginationData.total_items
       ? paginationData.total_items
       : paginationData.page_size * paginationData.page
   );
 
-  function changePageSize(pageSizeOption: number) {
-    let searchParams = new URLSearchParams(window.location.search);
-    searchParams.set('page_size', String(pageSizeOption));
-    window.location.assign(`${window.location.pathname}?${searchParams.toString()}`);
-  }
-
-  function changePage(page: number) {
-    let searchParams = new URLSearchParams(window.location.search);
-    searchParams.set('page', String(page));
-    window.location.assign(`${window.location.pathname}?${searchParams.toString()}`);
+  function getHref(
+    newPage: number = paginationData.page,
+    newPageSize: number = currentPerPage
+  ): string {
+    let searchParams = page.url.searchParams;
+    searchParams.set('page_size', String(newPageSize));
+    searchParams.set('page', String(newPage));
+    return `${page.url.pathname}?${searchParams.toString()}`;
   }
 </script>
 
@@ -48,9 +46,11 @@
     </span>
 
     <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-10 p-2 shadow-sm">
-      {#each rowsPerPageOptions as option}
+      {#each rowsPerPageOptions as newPerPageOption}
         <li>
-          <button class="btn btn-ghost" onclick={() => changePageSize(option)}>{option}</button>
+          <a href={getHref(undefined, newPerPageOption)} class="btn btn-ghost">
+            {newPerPageOption}
+          </a>
         </li>
       {/each}
     </ul>
@@ -58,30 +58,31 @@
 
   {#if paginationData.total_pages > 1}
     <div class="join ml-3">
-      <button
-        disabled={paginationData.page == 1}
-        class="btn btn-ghost"
-        onclick={() => changePage(paginationData.page - 1)}
+      <a
+        class={`btn btn-ghost ${paginationData.page == 1 && 'btn-disabled'}`}
+        href={getHref(paginationData.page - 1)}
       >
         <div class="size-3">
           <ChevronLeftIcon />
         </div>
-      </button>
-      {#each Array.from({ length: paginationData.total_pages }, (_, i) => i + 1) as page}
-        <button
-          class={`join-item btn ${page == paginationData.page && 'btn-active'}`}
-          onclick={() => changePage(page)}>{page}</button
+      </a>
+      {#each Array.from({ length: paginationData.total_pages }, (_, i) => i + 1) as currentPage}
+        <a
+          href={getHref(currentPage, currentPerPage)}
+          class={`join-item btn ${currentPage == paginationData.page && 'btn-active'}`}
         >
+          {currentPage}
+        </a>
       {/each}
-      <button
-        disabled={paginationData.page == paginationData.total_pages}
-        class="btn btn-ghost"
-        onclick={() => changePage(paginationData.page + 1)}
+
+      <a
+        href={getHref(paginationData.page + 1)}
+        class={`btn btn-ghost ${paginationData.page == paginationData.total_pages && 'btn-disabled'}`}
       >
         <div class="size-3">
           <ChevronRightIcon />
         </div>
-      </button>
+      </a>
     </div>
   {/if}
 </div>
