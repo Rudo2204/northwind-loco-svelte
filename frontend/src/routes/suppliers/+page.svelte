@@ -7,7 +7,7 @@
 <SeoHead componentData={data.seoData} />
 <div class="overflow-x-auto">
   <table class="table">
-    <thead>
+    <thead class="bg-base-300">
       <tr>
         <th>Company</th>
         <th>Contact</th>
@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       {#each data.suppliers!.results as supplier}
-        <tr>
+        <tr class="hover:bg-primary/10">
           <td class="hrefa">
             <a href="/suppliers/{supplier.supplierid}">
               {supplier.companyname}

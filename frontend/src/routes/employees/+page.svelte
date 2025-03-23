@@ -7,7 +7,7 @@
 <SeoHead componentData={data.seoData} />
 <div class="overflow-x-auto">
   <table class="table">
-    <thead>
+    <thead class="bg-base-300">
       <tr>
         <th>Name</th>
         <th>Title</th>
@@ -17,7 +17,7 @@
     </thead>
     <tbody>
       {#each data.employees!.results as employee}
-        <tr>
+        <tr class="hover:bg-primary/10">
           <td>
             <div class="flex items-center gap-3">
               <div class="avatar">
