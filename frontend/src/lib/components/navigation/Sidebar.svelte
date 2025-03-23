@@ -15,7 +15,7 @@
 
 <div class="drawer drawer-open">
   <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content m-12">
+  <div class="drawer-content">
     {@render children()}
   </div>
   <div>

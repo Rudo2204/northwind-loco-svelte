@@ -8,4 +8,10 @@
 
 <Navbar />
 <Toaster richColors position="bottom-center" />
-<Sidebar>{@render children()}</Sidebar>
+<Sidebar>
+  <div class="border-base-300 border-l-1">
+    <div class="m-12">
+      {@render children()}
+    </div>
+  </div>
+</Sidebar>
