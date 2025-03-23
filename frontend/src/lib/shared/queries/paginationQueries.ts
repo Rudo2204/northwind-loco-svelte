@@ -24,7 +24,7 @@ export abstract class PaginationQueries {
       urlSearchParams.append('page', page.toString());
     }
     if (pageSize !== undefined) {
-      urlSearchParams.append('pageSize', pageSize.toString());
+      urlSearchParams.append('page_size', pageSize.toString());
     }
 
     let query = '?' + urlSearchParams.toString();
