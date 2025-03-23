@@ -9,12 +9,16 @@
 
   let { paginationData } = $props();
   let currentPerPage = $derived(paginationData.page_size || SiteOptions.pageSize);
-  let from = $derived(paginationData.page);
-  const currentPageLastItem = paginationData.page + paginationData.page_size;
+  let from = $derived(
+    paginationData.page == 1
+      ? paginationData.page
+      : 1 + paginationData.page_size * (paginationData.page - 1)
+  );
+  const currentPageLastItem = paginationData.page_size * paginationData.page + 1;
   let to = $derived(
     currentPageLastItem > paginationData.total_items
       ? paginationData.total_items
-      : currentPageLastItem - 1
+      : paginationData.page_size * paginationData.page
   );
 
   function changePageSize(pageSizeOption: number) {
