@@ -40,7 +40,7 @@
       <div>
         <span class="font-bold">Reports To</span><br />
         {#if reportsToEmployee}
-          <a class="visiteda" href="/employees/{reportsToEmployee.employeeid}">
+          <a class="link link-primary" href="/employees/{reportsToEmployee.employeeid}">
             {reportsToEmployee.firstname}
             {reportsToEmployee.lastname}
           </a>

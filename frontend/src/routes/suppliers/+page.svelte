@@ -6,7 +6,7 @@
 </script>
 
 {#snippet row(supplier: SupplierResponse)}
-  <td class="hrefa">
+  <td class="link link-primary">
     <a href="/suppliers/{supplier.supplierid}">
       {supplier.companyname}
     </a>
