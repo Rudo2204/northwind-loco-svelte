@@ -30,4 +30,4 @@
 {/snippet}
 
 <SeoHead componentData={data.seoData} />
-<Table data={data.employees!.results} header={['name', 'title', 'region', 'phone']} {row} />
+<Table data={data.employees} header={['name', 'title', 'region', 'phone']} {row} />
