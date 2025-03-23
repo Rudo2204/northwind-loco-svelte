@@ -6,3 +6,6 @@ export { SeoHead } from './seo';
 
 /* Theme Select */
 export { ThemeSelect } from './themeSelect';
+
+/* Table */
+export { Table } from './table';
