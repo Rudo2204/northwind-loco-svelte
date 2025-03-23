@@ -9,6 +9,7 @@
   let rowsPerPageOptions = [5, 10, 15, 25, 50, 100];
 
   let { paginationData } = $props();
+  let goPage = $state(paginationData.page);
   let currentPerPage = $derived(paginationData.page_size || SiteOptions.pageSize);
   let from = $derived(
     paginationData.page == 1
@@ -116,13 +117,43 @@
           <ChevronLeftIcon />
         </div>
       </a>
-      {#each Array.from({ length: paginationData.total_pages }, (_, i) => i + 1) as currentPage}
-        <a
-          href={getHref(currentPage, currentPerPage)}
-          class={`join-item btn ${currentPage == paginationData.page && 'btn-active'}`}
-        >
-          {currentPage}
-        </a>
+      {#each getPageItems(paginationData.page, paginationData.total_pages) as currentPage}
+        {#if currentPage > 0}
+          <a
+            href={getHref(currentPage, currentPerPage)}
+            class={`join-item btn ${currentPage == paginationData.page && 'btn-active'}`}
+          >
+            {currentPage}
+          </a>
+        {:else}
+          <div class="dropdown dropdown-end animation-none">
+            <div tabindex="0" role="button" class="btn animation-none">...</div>
+            <ul
+              class="dropdown-content menu bg-base-100 rounded-box animation-none z-1 w-48 p-2 shadow-sm"
+            >
+              <li>
+                <div class="join animation-none h-15">
+                  <div class="join-item flex-1">
+                    <input
+                      bind:value={goPage}
+                      type="number"
+                      class="input validator animation-none focus:outline-none"
+                      required
+                      placeholder="Page"
+                      defaultValue={goPage}
+                      min="1"
+                      max={paginationData.total_pages}
+                      title={`Must be between be 1 to ${paginationData.total_pages}`}
+                    />
+                  </div>
+                  <a data-sveltekit-reload href={getHref(goPage)} class="btn btn-neutral join-item"
+                    >Go</a
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+        {/if}
       {/each}
 
       <a
