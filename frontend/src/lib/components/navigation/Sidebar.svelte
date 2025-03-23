@@ -44,7 +44,7 @@
         </li>
         <div class="divider m-0"></div>
         <li>
-          <a>
+          <a href="/suppliers">
             <InboxStackIcon />
             {#if isSidebarExpanded}
               Suppliers
@@ -52,7 +52,7 @@
           </a>
         </li>
         <li>
-          <a>
+          <a href="/products">
             <ShoppingCartIcon />
             {#if isSidebarExpanded}
               Products
@@ -60,7 +60,7 @@
           </a>
         </li>
         <li>
-          <a>
+          <a href="/orders">
             <ShoppingBagIcon />
             {#if isSidebarExpanded}
               Orders
@@ -76,7 +76,7 @@
           </a>
         </li>
         <li>
-          <a>
+          <a href="/customers">
             <UsersIcon />
             {#if isSidebarExpanded}
               Customers
