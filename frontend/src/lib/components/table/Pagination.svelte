@@ -21,6 +21,56 @@
       : paginationData.page_size * paginationData.page
   );
 
+  // https://github.com/huntabyte/bits-ui/blob/main/packages/bits-ui/src/lib/bits/pagination/pagination.svelte.ts
+  function getPageItems(page = 1, totalPages: number, siblingCount = 1) {
+    let pageItems: number[] = [];
+    const pagesToShow = new Set([1, totalPages]);
+    const firstItemWithSiblings = 2 + siblingCount;
+    const lastItemWithSiblings = totalPages - 1 - siblingCount;
+
+    if (firstItemWithSiblings > lastItemWithSiblings) {
+      for (let i = 2; i <= totalPages - 1; i++) {
+        pagesToShow.add(i);
+      }
+    } else if (page < firstItemWithSiblings) {
+      for (let i = 2; i <= Math.min(firstItemWithSiblings, totalPages); i++) {
+        pagesToShow.add(i);
+      }
+    } else if (page > lastItemWithSiblings) {
+      for (let i = totalPages - 1; i >= Math.max(lastItemWithSiblings, 2); i--) {
+        pagesToShow.add(i);
+      }
+    } else {
+      for (
+        let i = Math.max(page - siblingCount, 2);
+        i <= Math.min(page + siblingCount, totalPages);
+        i++
+      ) {
+        pagesToShow.add(i);
+      }
+    }
+
+    function addPage(value: number): void {
+      pageItems.push(value);
+    }
+
+    function addEllipsis(): void {
+      pageItems.push(0);
+    }
+
+    let lastNumber = 0;
+
+    for (const p of Array.from(pagesToShow).sort((a, b) => a - b)) {
+      if (p - lastNumber > 1) {
+        addEllipsis();
+      }
+      addPage(p);
+      lastNumber = p;
+    }
+
+    return pageItems;
+  }
+
   function getHref(
     newPage: number = paginationData.page,
     newPageSize: number = currentPerPage
