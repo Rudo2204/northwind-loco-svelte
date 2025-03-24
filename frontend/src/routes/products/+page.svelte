@@ -17,4 +17,9 @@
   <td>{product.unitsonorder}</td>{/snippet}
 
 <SeoHead componentData={data.seoData} />
-<Table data={data.products} header={['name', 'Qt per unit', 'price', 'stock', 'orders']} {row} />
+<Table
+  data={data.products}
+  title="Products"
+  header={['name', 'Qt per unit', 'price', 'stock', 'orders']}
+  {row}
+/>

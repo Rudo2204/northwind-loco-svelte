@@ -17,4 +17,9 @@
   <td>{supplier.country}</td>{/snippet}
 
 <SeoHead componentData={data.seoData} />
-<Table data={data.suppliers} header={['company', 'contact', 'title', 'city', 'country']} {row} />
+<Table
+  data={data.suppliers}
+  title="Suppliers"
+  header={['company', 'contact', 'title', 'city', 'country']}
+  {row}
+/>
