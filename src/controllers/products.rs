@@ -7,7 +7,7 @@ use loco_rs::prelude::*;
 
 use crate::controllers::load_item;
 use crate::models::_entities::products;
-use crate::views::products::ProductPaginationResponse;
+use crate::views::products::{ProductPaginationResponse, ProductResponse};
 
 #[debug_handler]
 #[tracing::instrument(skip(ctx))]
@@ -28,7 +28,7 @@ pub async fn get_one(
     State(ctx): State<AppContext>,
 ) -> Result<impl IntoResponse> {
     let item = load_item::<products::Entity>(&ctx, id).await?;
-    format::json(item)
+    format::json(ProductResponse::from(item))
 }
 
 pub fn routes() -> Routes {
