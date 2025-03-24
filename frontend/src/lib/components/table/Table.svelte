@@ -7,7 +7,7 @@
   };
 </script>
 
-<div class="card bg-base-100 border-base-300 w-full border-t shadow-sm">
+<div class="card bg-base-100 w-full shadow-sm">
   <div class="card-body">
     {#if title}
       <h2 class="card-title">{title}</h2>

@@ -7,7 +7,7 @@
 </script>
 
 <SeoHead componentData={data.seoData} />
-<div class="card bg-base-100 border-base-300 w-full border-t shadow-sm">
+<div class="card bg-base-100 w-full shadow-sm">
   <div class="card-body">
     <h2 class="card-title">
       <InboxStackIcon />
