@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 use crate::models::_entities::products;
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct ProductListResponse {
+pub struct ProductResponse {
     productid: i64,
     productname: String,
     supplierid: i64,
@@ -23,7 +23,7 @@ pub struct ProductListResponse {
     updated_at: DateTimeWithTimeZone,
 }
 
-impl From<products::Model> for ProductListResponse {
+impl From<products::Model> for ProductResponse {
     fn from(model: products::Model) -> Self {
         // NOTE: unwraps here are safe because we manually checked that they are all not null
         Self {
@@ -55,13 +55,13 @@ impl ProductPaginationResponse {
     pub fn response(
         data: PageResponse<products::Model>,
         pagination_query: &PaginationQuery,
-    ) -> Pager<Vec<ProductListResponse>> {
+    ) -> Pager<Vec<ProductResponse>> {
         Pager {
             results: data
                 .page
                 .into_iter()
-                .map(ProductListResponse::from)
-                .collect::<Vec<ProductListResponse>>(),
+                .map(ProductResponse::from)
+                .collect::<Vec<ProductResponse>>(),
             info: PagerMeta {
                 page: pagination_query.page,
                 page_size: pagination_query.page_size,
