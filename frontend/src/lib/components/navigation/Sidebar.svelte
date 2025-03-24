@@ -9,6 +9,12 @@
     ShoppingCartIcon,
     UsersIcon
   } from '../icons';
+  import { page } from '$app/state';
+
+  function getActiveClass(pathname: string) {
+    return page.url.pathname == pathname ? 'btn-active' : '';
+  }
+
   let isSidebarExpanded = $state(true);
   let { children } = $props();
 </script>
@@ -35,7 +41,7 @@
       </div>
       <ul>
         <li>
-          <a href="/">
+          <a class={`btn btn-ghost justify-start font-medium ${getActiveClass('/')}`} href="/">
             <HomeIcon />
             {#if isSidebarExpanded}
               Home
@@ -44,7 +50,10 @@
         </li>
         <div class="divider m-0"></div>
         <li>
-          <a href="/suppliers">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/suppliers')}`}
+            href="/suppliers"
+          >
             <InboxStackIcon />
             {#if isSidebarExpanded}
               Suppliers
@@ -52,7 +61,10 @@
           </a>
         </li>
         <li>
-          <a href="/products">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/products')}`}
+            href="/products"
+          >
             <ShoppingCartIcon />
             {#if isSidebarExpanded}
               Products
@@ -60,7 +72,10 @@
           </a>
         </li>
         <li>
-          <a href="/orders">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/orders')}`}
+            href="/orders"
+          >
             <ShoppingBagIcon />
             {#if isSidebarExpanded}
               Orders
@@ -68,7 +83,10 @@
           </a>
         </li>
         <li>
-          <a href="/employees">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/employees')}`}
+            href="/employees"
+          >
             <IdentificationIcon />
             {#if isSidebarExpanded}
               Employees
@@ -76,7 +94,10 @@
           </a>
         </li>
         <li>
-          <a href="/customers">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/customers')}`}
+            href="/customers"
+          >
             <UsersIcon />
             {#if isSidebarExpanded}
               Customers
