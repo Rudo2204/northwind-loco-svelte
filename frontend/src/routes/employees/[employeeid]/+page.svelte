@@ -3,7 +3,7 @@
   import { SeoHead } from '$lib/components';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
-  const employee = $derived(data.employee!);
+  const employee = $derived(data.employee);
   const reportsToEmployee = $derived(data.reportsToEmployee);
 </script>
 

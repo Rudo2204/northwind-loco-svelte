@@ -3,7 +3,7 @@
   import { SeoHead } from '$lib/components';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
-  const supplier = $derived(data.supplier!);
+  const supplier = $derived(data.supplier);
 </script>
 
 <SeoHead componentData={data.seoData} />
