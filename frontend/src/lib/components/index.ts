@@ -8,4 +8,4 @@ export { SeoHead } from './seo';
 export { ThemeSelect } from './themeSelect';
 
 /* Table */
-export { Table } from './table';
+export { ListTable, Table } from './table';
