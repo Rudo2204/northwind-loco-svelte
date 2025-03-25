@@ -33,6 +33,6 @@
 <Table
   title="Employees"
   data={data.employees}
-  header={['name', 'title', 'region', 'phone']}
+  header={['Name', 'Title', 'Region', 'Phone']}
   {row}
 />

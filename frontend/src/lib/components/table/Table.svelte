@@ -1,10 +1,6 @@
 <script lang="ts">
   import Pagination from './Pagination.svelte';
   let { data, title, header, row } = $props();
-
-  const capitalize = (string: string) => {
-    return string ? string.charAt(0).toUpperCase() + string.slice(1).toLowerCase() : '';
-  };
 </script>
 
 <div class="card bg-base-100 w-full shadow-sm">
@@ -18,8 +14,8 @@
         {#if header}
           <thead class="bg-base-300">
             <tr>
-              {#each header as h}
-                <th>{capitalize(h)}</th>
+              {#each header as head}
+                <th>{head}</th>
               {/each}
             </tr>
           </thead>

@@ -20,6 +20,6 @@
 <Table
   data={data.products}
   title="Products"
-  header={['name', 'Qt per unit', 'price', 'stock', 'orders']}
+  header={['Name', 'Qt per unit', 'Price', 'Stock', 'Orders']}
   {row}
 />

@@ -20,6 +20,6 @@
 <Table
   data={data.suppliers}
   title="Suppliers"
-  header={['company', 'contact', 'title', 'city', 'country']}
+  header={['Company', 'Contact', 'Title', 'City', 'Country']}
   {row}
 />
