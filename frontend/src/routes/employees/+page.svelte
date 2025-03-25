@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SeoHead, Table } from '$lib/components';
+  import { SeoHead, ListTable } from '$lib/components';
   import type { EmployeeResponse } from '$lib/shared/responses';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
@@ -30,7 +30,7 @@
 {/snippet}
 
 <SeoHead componentData={data.seoData} />
-<Table
+<ListTable
   title="Employees"
   data={data.employees}
   header={['Name', 'Title', 'Region', 'Phone']}

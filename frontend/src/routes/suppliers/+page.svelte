@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SeoHead, Table } from '$lib/components';
+  import { SeoHead, ListTable } from '$lib/components';
   import type { SupplierResponse } from '$lib/shared/responses';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
@@ -17,7 +17,7 @@
   <td>{supplier.country}</td>{/snippet}
 
 <SeoHead componentData={data.seoData} />
-<Table
+<ListTable
   data={data.suppliers}
   title="Suppliers"
   header={['Company', 'Contact', 'Title', 'City', 'Country']}
