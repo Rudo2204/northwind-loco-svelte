@@ -7,3 +7,4 @@ export * from './suppliers/supplierResponse';
 export * from './products/productResponse';
 export * from './orders/orderResponse';
 export * from './customers/customerResponse';
+export * from './shippers/shipperResponse';
