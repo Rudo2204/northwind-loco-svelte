@@ -1,5 +1,7 @@
+pub use super::_entities::customers::{self, ActiveModel, Entity, Model};
+use loco_rs::prelude::*;
 use sea_orm::entity::prelude::*;
-pub use super::_entities::customers::{ActiveModel, Model, Entity};
+
 pub type Customers = Entity;
 
 #[async_trait::async_trait]
@@ -19,7 +21,22 @@ impl ActiveModelBehavior for ActiveModel {
 }
 
 // implement your read-oriented logic here
-impl Model {}
+impl Model {
+    pub async fn find_by_customerid(
+        db: &DatabaseConnection,
+        customerid: &str,
+    ) -> ModelResult<Self> {
+        let customer = customers::Entity::find()
+            .filter(
+                model::query::condition()
+                    .eq(customers::Column::Customerid, customerid)
+                    .build(),
+            )
+            .one(db)
+            .await?;
+        customer.ok_or_else(|| ModelError::EntityNotFound)
+    }
+}
 
 // implement your write-oriented logic here
 impl ActiveModel {}
