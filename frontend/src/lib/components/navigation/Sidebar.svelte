@@ -12,7 +12,7 @@
   import { page } from '$app/state';
 
   function getActiveClass(pathname: string) {
-    return page.url.pathname == pathname ? 'btn-active' : '';
+    return page.url.pathname.includes(pathname) ? 'btn-active' : '';
   }
 
   let isSidebarExpanded = $state(true);
@@ -41,7 +41,10 @@
       </div>
       <ul>
         <li>
-          <a class={`btn btn-ghost justify-start font-medium ${getActiveClass('/')}`} href="/">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${page.url.pathname == '/' && 'btn-active'}`}
+            href="/"
+          >
             <HomeIcon />
             {#if isSidebarExpanded}
               Home
