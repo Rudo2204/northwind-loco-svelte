@@ -15,7 +15,12 @@
     </h2>
     <div class="divider m-0"></div>
     <div class="grid grid-cols-2 grid-rows-8 gap-3">
-      <div><span class="font-bold">Customer</span><br />TODO {order.customerid}</div>
+      <div>
+        <span class="font-bold">Customer</span><br />
+        <a class="link link-primary" href="/customers/{order.customerid}">
+          {order.customerid}
+        </a>
+      </div>
       <div><span class="font-bold">Order Date</span><br />{order.orderdate}</div>
 
       <div><span class="font-bold">Ship Name</span><br />{order.shipname}</div>
