@@ -4,6 +4,7 @@
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
   const order = $derived(data.order);
+  const shipper = $derived(data.shipper);
 </script>
 
 <SeoHead componentData={data.seoData} />
@@ -40,7 +41,7 @@
       </div>
       <div><span class="font-bold">Ship Postal Code</span><br />{order.shippostalcode || '-'}</div>
 
-      <div><span class="font-bold">Ship Via</span><br />TODO {order.shipvia}</div>
+      <div><span class="font-bold">Ship Via</span><br />{shipper.companyname}</div>
       <div><span class="font-bold">Ship Country</span><br />{order.shipcountry}</div>
 
       <div><span class="font-bold">Freight</span><br />${order.freight}</div>
