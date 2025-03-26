@@ -1,5 +1,15 @@
 import type { BaseCollectionResponse } from '../baseCollectionResponse';
 
+export interface OrderDetailsResponse {
+  productid: number;
+  unitprice: string;
+  quantity: number;
+  discount: number;
+  id: number;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface OrderResponse {
   orderid: number;
   customerid: string;
@@ -19,4 +29,16 @@ export interface OrderResponse {
   updated_at: Date;
 }
 
-export interface OrderCollectionResponse extends BaseCollectionResponse<OrderResponse> {}
+export interface DetailedOrderResponse extends OrderResponse {
+  details: OrderDetailsResponse[];
+}
+
+export interface TransformedOrderResponse extends DetailedOrderResponse {
+  totalprice: string;
+  totalproducts: number;
+  totalquantity: number;
+}
+
+export interface OrderCollectionResponse extends BaseCollectionResponse<DetailedOrderResponse> {}
+export interface TransformedOrderCollectionResponse
+  extends BaseCollectionResponse<TransformedOrderResponse> {}

@@ -1,6 +1,6 @@
 import { BaseConsumer } from '../baseConsumer';
 
-import type { OrderCollectionResponse, OrderResponse } from '$lib/shared/responses';
+import type { OrderCollectionResponse, DetailedOrderResponse } from '$lib/shared/responses';
 
 export class OrderConsumer extends BaseConsumer {
   resource = 'orders';
@@ -10,6 +10,6 @@ export class OrderConsumer extends BaseConsumer {
   }
 
   async getOne(orderid: string) {
-    return this.baseGetOne<OrderResponse>(orderid);
+    return this.baseGetOne<DetailedOrderResponse>(orderid);
   }
 }

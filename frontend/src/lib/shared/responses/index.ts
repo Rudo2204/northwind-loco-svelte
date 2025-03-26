@@ -1,3 +1,4 @@
+export * from './baseCollectionResponse';
 export * from './baseResponse';
 export * from './baseErrorResponse';
 
