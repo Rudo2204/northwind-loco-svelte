@@ -84,7 +84,7 @@
 <div class="mt-3">
   Rows per page:
 
-  <div class="dropdown dropdown-start">
+  <div class="dropdown dropdown-top">
     <div tabindex="0" role="button" class="btn m-1">
       {currentPerPage}
       <div class="size-3"><ChevronDownIcon /></div>
@@ -94,7 +94,7 @@
       {from}-{to} of {paginationData.total_items}
     </span>
 
-    <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-10 p-2 shadow-sm">
+    <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-18 p-2 shadow-sm">
       {#each rowsPerPageOptions as newPerPageOption}
         <li>
           <button onclick={() => gotoHref(undefined, newPerPageOption)} class="btn btn-ghost">
