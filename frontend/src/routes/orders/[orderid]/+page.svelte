@@ -1,11 +1,26 @@
 <script lang="ts">
   import { ShoppingBagIcon } from '$lib/components/icons';
   import { SeoHead } from '$lib/components';
+  import type { OrderDetailsResponse } from '$lib/shared/responses';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
   const order = $derived(data.order);
   const shipper = $derived(data.shipper);
+  const productIndex = $derived(data.productIndex);
+  const header = ['Product', 'Quantity', 'Order Price', 'Total Price', 'Discount'];
 </script>
+
+{#snippet row(details: OrderDetailsResponse)}
+  <td class="link link-primary">
+    <a href="/products/{details.productid}">
+      {productIndex[details.productid]}
+    </a>
+  </td>
+  <td>{details.quantity}</td>
+  <td>${details.unitprice}</td>
+  <td>${(Number.parseFloat(details.unitprice) * details.quantity).toFixed(2)}</td>
+  <td>{details.discount * 100}%</td>
+{/snippet}
 
 <SeoHead componentData={data.seoData} />
 <div class="card bg-base-100 w-full shadow-sm">
@@ -46,6 +61,31 @@
 
       <div><span class="font-bold">Freight</span><br />${order.freight}</div>
     </div>
+    <div class="divider m-0"></div>
+
+    <h2 class="card-title">Products In Order</h2>
+    <div class="overflow-x-auto">
+      <table class="table">
+        {#if header}
+          <thead class="bg-base-300">
+            <tr>
+              {#each header as head}
+                <th>{head}</th>
+              {/each}
+            </tr>
+          </thead>
+        {/if}
+
+        <tbody>
+          {#each data.order.details as d}
+            <tr class="hover:bg-primary/10">
+              {@render row(d)}
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+
     <div class="divider m-0"></div>
     <div class="card-actions justify-start">
       <button class="btn btn-primary" onclick={() => window.history.back()}>Go back</button>
