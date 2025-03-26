@@ -10,14 +10,14 @@ use crate::models::_entities::products;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ProductResponse {
     productid: i64,
-    productname: String,
-    supplierid: i64,
-    categoryid: i64,
-    quantityperunit: String,
-    unitprice: Decimal,
-    unitsinstock: i64,
-    unitsonorder: i64,
-    reorderlevel: i64,
+    productname: Option<String>,
+    supplierid: Option<i64>,
+    categoryid: Option<i64>,
+    quantityperunit: Option<String>,
+    unitprice: Option<Decimal>,
+    unitsinstock: Option<i64>,
+    unitsonorder: Option<i64>,
+    reorderlevel: Option<i64>,
     discontinued: bool,
     created_at: DateTimeWithTimeZone,
     updated_at: DateTimeWithTimeZone,
@@ -25,17 +25,17 @@ pub struct ProductResponse {
 
 impl From<products::Model> for ProductResponse {
     fn from(model: products::Model) -> Self {
-        // NOTE: unwraps here are safe because we manually checked that they are all not null
         Self {
             productid: model.productid,
-            productname: model.productname.unwrap(),
-            supplierid: model.supplierid.unwrap(),
-            categoryid: model.categoryid.unwrap(),
-            quantityperunit: model.quantityperunit.unwrap(),
-            unitprice: model.unitprice.unwrap(),
-            unitsinstock: model.unitsinstock.unwrap(),
-            unitsonorder: model.unitsonorder.unwrap(),
-            reorderlevel: model.reorderlevel.unwrap(),
+            productname: model.productname,
+            supplierid: model.supplierid,
+            categoryid: model.categoryid,
+            quantityperunit: model.quantityperunit,
+            unitprice: model.unitprice,
+            unitsinstock: model.unitsinstock,
+            unitsonorder: model.unitsonorder,
+            reorderlevel: model.reorderlevel,
+            // NOTE: unwraps here are safe because we manually checked that they are all not null
             discontinued: match model.discontinued.unwrap().as_str() {
                 "0" => false,
                 "1" => true,
