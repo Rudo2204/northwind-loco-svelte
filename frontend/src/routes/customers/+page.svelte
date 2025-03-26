@@ -7,7 +7,7 @@
 
 {#snippet row(customer: CustomerResponse)}
   <td class="link link-primary">
-    <a href="/customers/{customer.id}">
+    <a href="/customers/{customer.customerid}">
       {customer.companyname}
     </a>
   </td>
