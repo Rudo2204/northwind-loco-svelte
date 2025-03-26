@@ -31,7 +31,7 @@
       <div><span class="font-bold">Quantity Per Unit</span><br />{product.quantityperunit}</div>
       <div><span class="font-bold">Reorder Level</span><br />{product.reorderlevel}</div>
 
-      <div><span class="font-bold">Unit Price</span><br />{product.unitprice}</div>
+      <div><span class="font-bold">Unit Price</span><br />${product.unitprice}</div>
       <div>
         <span class="font-bold">Discontinued</span><br />{product.discontinued ? 'Yes' : 'No'}
       </div>
