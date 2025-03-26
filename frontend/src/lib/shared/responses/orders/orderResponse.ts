@@ -37,6 +37,7 @@ export interface TransformedOrderResponse extends DetailedOrderResponse {
   totalprice: string;
   totalproducts: number;
   totalquantity: number;
+  totaldiscount: number;
 }
 
 export interface OrderCollectionResponse extends BaseCollectionResponse<DetailedOrderResponse> {}

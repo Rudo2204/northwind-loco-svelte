@@ -1,7 +1,6 @@
 import { OrderConsumer, throwOrReturnResults } from '$lib/server/httpConsumers';
 import { PaginationQueries } from '$lib/shared/queries';
 import type {
-  BaseCollectionResponse,
   OrderDetailsResponse,
   TransformedOrderResponse,
   TransformedOrderCollectionResponse
@@ -10,15 +9,19 @@ import type {
 function calculateDetails(details: OrderDetailsResponse[]) {
   let totalquantity = 0;
   let totalprice = 0;
+  let totaldiscount = 0;
   details.forEach((item) => {
-    totalprice += Number.parseFloat(item.unitprice) * item.quantity;
+    const itemPrice = Number.parseFloat(item.unitprice) * item.quantity;
+    totalprice += itemPrice;
     totalquantity += item.quantity;
+    totaldiscount += itemPrice * item.discount;
   });
   const totalproducts = details.length;
   return {
     totalprice: totalprice.toFixed(2),
     totalproducts,
-    totalquantity
+    totalquantity,
+    totaldiscount
   };
 }
 
