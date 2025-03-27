@@ -4,14 +4,13 @@
   import { Toaster } from 'svelte-sonner';
 
   let { children } = $props();
+  let isSidebarExpanded = $state(true);
 </script>
 
-<Navbar />
 <Toaster richColors position="bottom-center" />
-<Sidebar>
-  <div class="border-base-300 border-l-1">
-    <div class="m-12">
-      {@render children()}
-    </div>
+<Sidebar {isSidebarExpanded}>
+  <Navbar bind:isSidebarExpanded />
+  <div class="m-12">
+    {@render children()}
   </div>
 </Sidebar>
