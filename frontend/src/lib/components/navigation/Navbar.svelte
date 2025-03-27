@@ -1,23 +1,28 @@
 <script lang="ts">
   import { ThemeSelect } from '$lib/components';
-  import { MagnifyingGlassIcon } from '$lib/components/icons';
+  import { MagnifyingGlassIcon, ArrowsRightLeftIcon } from '$lib/components/icons';
   import { toast } from 'svelte-sonner';
+
+  let { isSidebarExpanded = $bindable() } = $props();
 </script>
 
 <div class="navbar bg-base-300 shadow-sm">
-  <div class="flex-1">
-    <div class="text-2xl">
-      <a href="/">
-        <span class="font-black">Northwind</span> Traders
-      </a>
-    </div>
+  <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+  <div class={`flex-1 ${isSidebarExpanded ? 'justify-end' : 'justify-center'}`}>
+    <button
+      class="btn btn-ghost btn-square"
+      onclick={() => (isSidebarExpanded = !isSidebarExpanded)}
+    >
+      <ArrowsRightLeftIcon />
+    </button>
   </div>
+
   <div class="join flex-auto">
     <div>
       <input
         type="text"
         placeholder="Search"
-        class="input input-bordered w-120 focus:outline-none"
+        class="input input-bordered w-80 focus:outline-none"
       />
     </div>
     <button

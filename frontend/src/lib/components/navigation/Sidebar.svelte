@@ -1,7 +1,5 @@
 <script lang="ts">
   import {
-    ArrowLongLeftIcon,
-    Bar3Icon,
     HomeIcon,
     IdentificationIcon,
     InboxStackIcon,
@@ -15,8 +13,7 @@
     return page.url.pathname.includes(pathname) ? 'btn-active' : '';
   }
 
-  let isSidebarExpanded = $state(true);
-  let { children } = $props();
+  let { isSidebarExpanded, children } = $props();
 </script>
 
 <div class="drawer drawer-open">
@@ -24,32 +21,26 @@
   <div class="drawer-content">
     {@render children()}
   </div>
-  <div>
-    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+  <div class="drawer-side bg-base-200">
     <aside class={`menu text-base-content p-4 ${isSidebarExpanded ? 'w-60' : ''}`}>
-      <div class={`flex ${isSidebarExpanded ? 'justify-end' : 'justify-center'}`}>
-        <button
-          class="btn btn-ghost btn-square"
-          onclick={() => (isSidebarExpanded = !isSidebarExpanded)}
-        >
-          {#if isSidebarExpanded}
-            <ArrowLongLeftIcon />
-          {:else}
-            <Bar3Icon />
-          {/if}
-        </button>
-      </div>
       <ul>
         <li>
-          <a
-            class={`btn btn-ghost justify-start font-medium ${page.url.pathname == '/' && 'btn-active'}`}
-            href="/"
-          >
-            <HomeIcon />
-            {#if isSidebarExpanded}
-              Home
-            {/if}
-          </a>
+          {#if isSidebarExpanded}
+            <div class="flex-auto justify-center">
+              <div class="text-2xl">
+                <a href="/">
+                  <span class="font-black">Northwind</span> Traders
+                </a>
+              </div>
+            </div>
+          {:else}
+            <a
+              class={`btn btn-ghost justify-start font-medium ${page.url.pathname == '/' && 'btn-active'}`}
+              href="/"
+            >
+              <HomeIcon />
+            </a>
+          {/if}
         </li>
         <div class="divider m-0"></div>
         <li>
