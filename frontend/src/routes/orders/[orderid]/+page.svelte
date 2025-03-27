@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { format } from 'date-fns';
   import { ShoppingBagIcon } from '$lib/components/icons';
   import { SeoHead } from '$lib/components';
   import type { OrderDetailsResponse } from '$lib/shared/responses';
@@ -37,13 +38,21 @@
           {order.customerid}
         </a>
       </div>
-      <div><span class="font-bold">Order Date</span><br />{order.orderdate}</div>
+      <div>
+        <span class="font-bold">Order Date</span><br />{format(order.orderdate, 'yyyy-MM-dd')}
+      </div>
 
       <div><span class="font-bold">Ship Name</span><br />{order.shipname}</div>
-      <div><span class="font-bold">Required Date</span><br />{order.requireddate}</div>
+      <div>
+        <span class="font-bold">Required Date</span><br />{format(order.requireddate, 'yyyy-MM-dd')}
+      </div>
 
       <div><span class="font-bold">Total Products</span><br />{order.totalproducts}</div>
-      <div><span class="font-bold">Shipped Date</span><br />{order.shippeddate || '-'}</div>
+      <div>
+        <span class="font-bold">Shipped Date</span><br />{order.shippeddate
+          ? format(order.shippeddate, 'yyyy-MM-dd')
+          : '-'}
+      </div>
 
       <div><span class="font-bold">Total Quantity</span><br />{order.totalquantity}</div>
       <div><span class="font-bold">Ship City</span><br />{order.shipcity}</div>

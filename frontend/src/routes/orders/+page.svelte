@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { format } from 'date-fns';
   import { SeoHead, ListTable } from '$lib/components';
   import type { TransformedOrderResponse } from '$lib/shared/responses';
   import type { PageData } from './$types';
@@ -14,7 +15,7 @@
   <td>${order.totalprice}</td>
   <td>{order.totalproducts}</td>
   <td>{order.totalquantity}</td>
-  <td>{order.shippeddate || '-'}</td>
+  <td>{order.shippeddate ? format(order.shippeddate, 'yyyy-MM-dd') : '-'}</td>
   <td>{order.shipname}</td>
   <td>{order.shipcity}</td>
   <td>{order.shipcountry}</td>
