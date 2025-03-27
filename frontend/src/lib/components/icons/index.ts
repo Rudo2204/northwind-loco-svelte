@@ -1,4 +1,3 @@
-export { default as ArrowLongLeftIcon } from './ArrowLongLeftIcon.svelte';
 export { default as Bar3Icon } from './Bar3Icon.svelte';
 export { default as HomeIcon } from './HomeIcon.svelte';
 export { default as IdentificationIcon } from './IdentificationIcon.svelte';
@@ -10,3 +9,4 @@ export { default as MagnifyingGlassIcon } from './MagnifyingGlassIcon.svelte';
 export { default as ChevronDownIcon } from './ChevronDownIcon.svelte';
 export { default as ChevronLeftIcon } from './ChevronLeftIcon.svelte';
 export { default as ChevronRightIcon } from './ChevronRightIcon.svelte';
+export { default as ArrowsRightLeftIcon } from './ArrowsRightLeftIcon.svelte';
