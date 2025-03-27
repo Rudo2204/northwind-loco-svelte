@@ -26,7 +26,7 @@
     </table>
   </div>
 
-  <div class="flex justify-end">
+  <div class="mr-3 flex justify-end">
     <Pagination paginationData={data.pagination} />
   </div>
 </div>
