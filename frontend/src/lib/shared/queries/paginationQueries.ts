@@ -8,7 +8,7 @@ export abstract class PaginationQueries {
     if (search) {
       params = {
         page: search.get('page') ? Number(search.get('page')) : SiteOptions.page,
-        pageSize: search.get('pageSize,') ? Number(search.get('pageSize')) : SiteOptions.pageSize
+        pageSize: search.get('page_size') ? Number(search.get('page_size')) : SiteOptions.pageSize
       };
     } else {
       params = {
@@ -24,7 +24,7 @@ export abstract class PaginationQueries {
       urlSearchParams.append('page', page.toString());
     }
     if (pageSize !== undefined) {
-      urlSearchParams.append('pageSize', pageSize.toString());
+      urlSearchParams.append('page_size', pageSize.toString());
     }
 
     let query = '?' + urlSearchParams.toString();

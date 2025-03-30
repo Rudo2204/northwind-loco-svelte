@@ -2,25 +2,22 @@
 #![allow(clippy::unnecessary_struct_initialization)]
 #![allow(clippy::unused_async)]
 use axum::debug_handler;
-use axum::extract::Path;
+use axum::extract::{Path, Query};
 use loco_rs::prelude::*;
 
 use crate::controllers::load_item;
 use crate::models::_entities::products;
-use crate::views::PaginationResponse;
+use crate::views::products::{ProductPaginationResponse, ProductResponse};
 
 #[debug_handler]
 #[tracing::instrument(skip(ctx))]
-pub async fn list(State(ctx): State<AppContext>) -> Result<impl IntoResponse> {
-    let res = query::fetch_page(
-        &ctx.db,
-        products::Entity::find(),
-        &query::PaginationQuery::page(1),
-    )
-    .await?;
-    Ok(format::json(PaginationResponse::response(
-        res,
-        &query::PaginationQuery::page(1),
+pub async fn list(
+    query: Query<query::PaginationQuery>,
+    State(ctx): State<AppContext>,
+) -> Result<impl IntoResponse> {
+    let res = query::fetch_page(&ctx.db, products::Entity::find(), &query).await?;
+    Ok(format::json(ProductPaginationResponse::response(
+        res, &query,
     )))
 }
 
@@ -31,7 +28,7 @@ pub async fn get_one(
     State(ctx): State<AppContext>,
 ) -> Result<impl IntoResponse> {
     let item = load_item::<products::Entity>(&ctx, id).await?;
-    format::json(item)
+    format::json(ProductResponse::from(item))
 }
 
 pub fn routes() -> Routes {

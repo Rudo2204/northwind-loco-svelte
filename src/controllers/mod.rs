@@ -9,3 +9,4 @@ pub mod suppliers;
 pub mod products;
 pub mod orders;
 pub mod employees;
+pub mod shippers;

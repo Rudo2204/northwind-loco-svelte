@@ -1,7 +1,5 @@
 <script lang="ts">
   import {
-    ArrowLongLeftIcon,
-    Bar3Icon,
     HomeIcon,
     IdentificationIcon,
     InboxStackIcon,
@@ -9,42 +7,47 @@
     ShoppingCartIcon,
     UsersIcon
   } from '../icons';
-  let isSidebarExpanded = $state(true);
-  let { children } = $props();
+  import { page } from '$app/state';
+
+  function getActiveClass(pathname: string) {
+    return page.url.pathname.includes(pathname) ? 'btn-active' : '';
+  }
+
+  let { isSidebarExpanded, children } = $props();
 </script>
 
 <div class="drawer drawer-open">
   <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content m-12">
+  <div class="drawer-content">
     {@render children()}
   </div>
-  <div>
-    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+  <div class="drawer-side bg-base-200">
     <aside class={`menu text-base-content p-4 ${isSidebarExpanded ? 'w-60' : ''}`}>
-      <div class={`flex ${isSidebarExpanded ? 'justify-end' : 'justify-center'}`}>
-        <button
-          class="btn btn-ghost btn-square"
-          onclick={() => (isSidebarExpanded = !isSidebarExpanded)}
-        >
-          {#if isSidebarExpanded}
-            <ArrowLongLeftIcon />
-          {:else}
-            <Bar3Icon />
-          {/if}
-        </button>
-      </div>
       <ul>
         <li>
-          <a href="/">
-            <HomeIcon />
-            {#if isSidebarExpanded}
-              Home
-            {/if}
-          </a>
+          {#if isSidebarExpanded}
+            <div class="flex-auto justify-center">
+              <div class="text-2xl">
+                <a href="/">
+                  <span class="font-black">Northwind</span> Traders
+                </a>
+              </div>
+            </div>
+          {:else}
+            <a
+              class={`btn btn-ghost justify-start font-medium ${page.url.pathname == '/' && 'btn-active'}`}
+              href="/"
+            >
+              <HomeIcon />
+            </a>
+          {/if}
         </li>
         <div class="divider m-0"></div>
         <li>
-          <a>
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/suppliers')}`}
+            href="/suppliers"
+          >
             <InboxStackIcon />
             {#if isSidebarExpanded}
               Suppliers
@@ -52,7 +55,10 @@
           </a>
         </li>
         <li>
-          <a>
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/products')}`}
+            href="/products"
+          >
             <ShoppingCartIcon />
             {#if isSidebarExpanded}
               Products
@@ -60,7 +66,10 @@
           </a>
         </li>
         <li>
-          <a>
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/orders')}`}
+            href="/orders"
+          >
             <ShoppingBagIcon />
             {#if isSidebarExpanded}
               Orders
@@ -68,7 +77,10 @@
           </a>
         </li>
         <li>
-          <a href="/employees">
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/employees')}`}
+            href="/employees"
+          >
             <IdentificationIcon />
             {#if isSidebarExpanded}
               Employees
@@ -76,7 +88,10 @@
           </a>
         </li>
         <li>
-          <a>
+          <a
+            class={`btn btn-ghost justify-start font-medium ${getActiveClass('/customers')}`}
+            href="/customers"
+          >
             <UsersIcon />
             {#if isSidebarExpanded}
               Customers

@@ -3,7 +3,7 @@
   import { SeoHead } from '$lib/components';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
-  const employee = $derived(data.employee!);
+  const employee = $derived(data.employee);
   const reportsToEmployee = $derived(data.reportsToEmployee);
 </script>
 
@@ -40,7 +40,7 @@
       <div>
         <span class="font-bold">Reports To</span><br />
         {#if reportsToEmployee}
-          <a class="visiteda" href="/employees/{reportsToEmployee.employeeid}">
+          <a class="link link-primary" href="/employees/{reportsToEmployee.employeeid}">
             {reportsToEmployee.firstname}
             {reportsToEmployee.lastname}
           </a>
