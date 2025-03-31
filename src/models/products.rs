@@ -1,6 +1,20 @@
+pub use super::_entities::products::{self, ActiveModel, Entity, Model};
+use loco_rs::model::query::PaginationQuery;
+use loco_rs::prelude::*;
+use query::PageResponse;
 use sea_orm::entity::prelude::*;
-pub use super::_entities::products::{ActiveModel, Model, Entity};
+use serde::{Deserialize, Serialize};
 pub type Products = Entity;
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ProductQueryParams {
+    unitprice_gte: Option<Decimal>,
+    unitprice_lte: Option<Decimal>,
+    is_discontinued: Option<bool>,
+
+    #[serde(flatten)]
+    pub pagination: PaginationQuery,
+}
 
 #[async_trait::async_trait]
 impl ActiveModelBehavior for ActiveModel {
@@ -25,4 +39,29 @@ impl Model {}
 impl ActiveModel {}
 
 // implement your custom finders, selectors oriented logic here
-impl Entity {}
+impl Entity {
+    fn get_query_selector(params: &ProductQueryParams) -> Select<Products> {
+        let mut query = Products::find();
+        if let Some(unitprice_gte) = params.unitprice_gte {
+            query = query.filter(products::Column::Unitprice.gte(unitprice_gte))
+        }
+        if let Some(unitprice_lte) = params.unitprice_lte {
+            query = query.filter(products::Column::Unitprice.lte(unitprice_lte))
+        }
+        if let Some(is_discontinued) = params.is_discontinued {
+            query = match is_discontinued {
+                true => query.filter(products::Column::Discontinued.eq("1")),
+                false => query.filter(products::Column::Discontinued.eq("0")),
+            }
+        }
+        query
+    }
+
+    pub async fn query(
+        db: &DatabaseConnection,
+        params: &ProductQueryParams,
+    ) -> Result<PageResponse<Model>> {
+        let selector = Entity::get_query_selector(&params);
+        query::fetch_page(db, selector, &params.pagination).await
+    }
+}
