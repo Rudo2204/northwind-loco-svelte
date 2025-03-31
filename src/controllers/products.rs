@@ -7,17 +7,19 @@ use loco_rs::prelude::*;
 
 use crate::controllers::load_item;
 use crate::models::_entities::products;
+use crate::models::products::ProductQueryParams;
 use crate::views::products::{ProductPaginationResponse, ProductResponse};
 
 #[debug_handler]
 #[tracing::instrument(skip(ctx))]
 pub async fn list(
-    query: Query<query::PaginationQuery>,
+    params: Query<ProductQueryParams>,
     State(ctx): State<AppContext>,
 ) -> Result<impl IntoResponse> {
-    let res = query::fetch_page(&ctx.db, products::Entity::find(), &query).await?;
+    let res = products::Entity::query(&ctx.db, &params).await?;
     Ok(format::json(ProductPaginationResponse::response(
-        res, &query,
+        res,
+        &params.pagination,
     )))
 }
 
