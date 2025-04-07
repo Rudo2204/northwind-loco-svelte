@@ -7,7 +7,7 @@ export abstract class CustomerPageHelper {
     return throwOrReturnResults(response);
   }
 
-  static async getCustomerCollection(search?: URLSearchParams) {
+  static async getCustomerCollection(search: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
     const response = await new CustomerConsumer().getList(query);
     return throwOrReturnResults(response);

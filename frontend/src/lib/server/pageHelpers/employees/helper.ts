@@ -7,7 +7,7 @@ export abstract class EmployeePageHelper {
     return throwOrReturnResults(response);
   }
 
-  static async getEmployeeCollection(search?: URLSearchParams) {
+  static async getEmployeeCollection(search: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
     const response = await new EmployeeConsumer().getList(query);
     return throwOrReturnResults(response);
