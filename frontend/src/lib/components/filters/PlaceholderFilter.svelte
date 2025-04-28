@@ -10,21 +10,18 @@
     filters: FiltersConfig;
   } = $props();
 
-  function replacePlaceholderFilter(event: MouseEvent, option: string) {
-    event.preventDefault();
+  function replacePlaceholderFilter(event: Event) {
+    const filterLabel: string = (event.target as HTMLInputElement).value;
     displayedFilters.pop();
-    displayedFilters.push(filters[option]);
+    displayedFilters.push(filters[filterLabel]);
   }
 </script>
 
 <div class="flex p-0">
-  <select onselect={(event) => event.preventDefault()} class="select focus:outline-none">
+  <select class="select focus:outline-none" onchange={(event) => replacePlaceholderFilter(event)}>
     <option disabled selected>Source</option>
     {#each possibleFilters as option}
-      <option
-        onselect={(event) => event.preventDefault()}
-        onclick={(event) => replacePlaceholderFilter(event, option)}>{option}</option
-      >
+      <option value={option}>{option}</option>
     {/each}
   </select>
   <input type="text" placeholder="Operator" class="input" disabled />
