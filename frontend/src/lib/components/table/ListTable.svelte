@@ -39,43 +39,29 @@
       {/if}
       <div class="flex flex-1"></div>
       {#if filters}
-        <button
-          onclick={() => eval('listtable_filter_modal.showModal()')}
-          class="card-title btn btn-primary flex justify-end"
-        >
-          <FunnelIcon />
-          Filters
-        </button>
+        <details class="dropdown dropdown-end">
+          <summary class="btn btn-primary m-1">
+            <FunnelIcon />
+            Filters
+          </summary>
 
-        <dialog id="listtable_filter_modal" class="modal">
-          <div class="modal-box">
-            <form method="dialog">
-              <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2">✕</button>
-            </form>
-
-            <h3 class="text-lg font-bold">Filters</h3>
-            <ul>
-              {#each displayedFilters as item}
-                <li>
-                  {#if item.filterType == 'placeholder'}
-                    <PlaceholderFilter bind:displayedFilters {filters} {possibleFilters} />
-                  {:else}
-                    <div>foobar</div>
-                  {/if}
-                </li>
-              {/each}
-            </ul>
-
+          <ul class="dropdown-content menu bg-base-100 rounded-box z-1 w-96 p-2 shadow-sm">
+            {#each displayedFilters as item}
+              <li>
+                {#if item.filterType == 'placeholder'}
+                  <PlaceholderFilter bind:displayedFilters {filters} {possibleFilters} />
+                {:else}
+                  <div>foobar</div>
+                {/if}
+              </li>
+            {/each}
             <div class="flex pt-2">
               <button class="btn" onclick={() => addPlaceholderFilter()}> Add Filter </button>
               <div class="flex flex-1"></div>
-              <button
-                class="btn flex justify-end"
-                onclick={() => eval('listtable_filter_modal.close()')}>Apply</button
-              >
+              <button class="btn flex justify-end">Apply</button>
             </div>
-          </div>
-        </dialog>
+          </ul>
+        </details>
       {/if}
     </div>
   </div>
