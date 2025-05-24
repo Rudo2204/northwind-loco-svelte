@@ -1,19 +1,26 @@
 <script lang="ts">
   import type { FiltersConfig, SingleFilterConfig } from '$lib/components';
+  import { v4 as uuidv4 } from 'uuid';
+  import findIndex from 'lodash/findIndex';
+
   let {
     displayedFilters = $bindable(),
+    filterItem,
     possibleFilters,
     filters
   }: {
     displayedFilters: SingleFilterConfig[];
+    filterItem: SingleFilterConfig;
     possibleFilters: string[];
     filters: FiltersConfig;
   } = $props();
 
   function replacePlaceholderFilter(event: Event) {
     const filterLabel: string = (event.target as HTMLInputElement).value;
-    displayedFilters.pop();
-    displayedFilters.push(filters[filterLabel]);
+    let newFilter = filters[filterLabel];
+    const index = findIndex(displayedFilters, ['id', filterItem.id]);
+    newFilter.id = uuidv4();
+    displayedFilters[index] = newFilter;
   }
 </script>
 
