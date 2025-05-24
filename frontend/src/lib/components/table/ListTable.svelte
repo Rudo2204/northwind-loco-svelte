@@ -4,8 +4,14 @@
   import type { FiltersConfig, SingleFilterConfig } from '$lib/components';
   import Table from './Table.svelte';
   import { FunnelIcon } from '$lib/components/icons';
-  import { placeholderFilter } from '$lib/components/filters';
-  import PlaceholderFilter from '../filters/PlaceholderFilter.svelte';
+  import {
+    placeholderFilter,
+    PlaceholderFilter,
+    BooleanFilter,
+    NumberFilter,
+    StringFilter
+  } from '$lib/components/filters';
+  import remove from 'lodash/remove';
 
   let {
     data,
@@ -29,6 +35,10 @@
   function addPlaceholderFilter() {
     displayedFilters.push(placeholderFilter());
   }
+
+  function removeFilter(id: string) {
+    remove(displayedFilters, ['id', id]);
+  }
 </script>
 
 <div class="card bg-base-100 w-full shadow-sm">
@@ -49,9 +59,20 @@
             {#each displayedFilters as item}
               <li>
                 {#if item.filterType == 'placeholder'}
-                  <PlaceholderFilter bind:displayedFilters {filters} {possibleFilters} />
+                  <PlaceholderFilter
+                    bind:displayedFilters
+                    filterItem={item}
+                    {filters}
+                    {possibleFilters}
+                  />
+                {:else if item.filterType === 'boolean'}
+                  <BooleanFilter bind:displayedFilters {removeFilter} filterItem={item} />
+                {:else if item.filterType === 'string'}
+                  <StringFilter bind:displayedFilters {removeFilter} filterItem={item} />
+                {:else if item.filterType === 'number'}
+                  <NumberFilter bind:displayedFilters {removeFilter} filterItem={item} />
                 {:else}
-                  <div>foobar</div>
+                  <h3>Unconfigured filter</h3>
                 {/if}
               </li>
             {/each}
