@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 type StringOperator = 'eq' | 'neq' | 'q';
 type NumberOperator = 'eq' | 'neq' | 'gt' | 'lt' | 'gte' | 'lte';
 type BooleanOperator = 'eq';
@@ -6,7 +8,7 @@ type PlaceholderOperator = 'eq';
 type ComparisonOperator = StringOperator | NumberOperator | BooleanOperator | PlaceholderOperator;
 type FilterType = 'string' | 'number' | 'boolean' | 'placeholder';
 
-const labelMap: Record<string, string> = {
+export const labelMap: Record<string, string> = {
   eq: '=',
   neq: '!=',
   q: 'Contains',
@@ -17,67 +19,88 @@ const labelMap: Record<string, string> = {
 };
 
 export interface FilterOperator<T = ComparisonOperator> {
-  value: T;
-  label: string;
+  value: any;
+  operator?: T;
+  operatorLabel: string;
   type: 'single' | 'multiple';
 }
 
 export interface SingleFilterConfig {
-  operators: Array<FilterOperator>;
+  id: string;
+  source: string | null;
   filterType: FilterType;
+  validOperators: Array<FilterOperator>;
+  operator?: FilterOperator;
+  value: string | number | boolean | undefined;
   defaultValue: string | number | boolean | undefined;
 }
 
 export type FiltersConfig = Record<string, SingleFilterConfig>;
 
-export function placeholderFilter(): SingleFilterConfig {
+export function placeholderFilter(id: string = uuidv4()): SingleFilterConfig {
   const operators: Array<FilterOperator<PlaceholderOperator>> = [];
   const textFilterConfig: SingleFilterConfig = {
-    operators: operators,
+    id,
+    source: null,
+    validOperators: operators,
     filterType: 'placeholder',
+    value: '',
     defaultValue: ''
   };
   return textFilterConfig;
 }
 
-export function textFilter(): SingleFilterConfig {
+export function textFilter(source: string, id: string = uuidv4()): SingleFilterConfig {
   const operators: Array<FilterOperator<StringOperator>> = [
-    { value: 'eq', label: labelMap.eq, type: 'single' },
-    { value: 'neq', label: labelMap.neq, type: 'single' },
-    { value: 'q', label: labelMap.q, type: 'single' }
+    { value: 'eq', operatorLabel: labelMap.eq, type: 'single' },
+    { value: 'neq', operatorLabel: labelMap.neq, type: 'single' },
+    { value: 'q', operatorLabel: labelMap.q, type: 'single' }
   ];
   const textFilterConfig: SingleFilterConfig = {
-    operators: operators,
+    id,
+    source,
+    validOperators: operators,
     filterType: 'string',
+    value: '',
     defaultValue: ''
   };
   return textFilterConfig;
 }
 
-export function numberFilter(defaultValue?: number): SingleFilterConfig {
+export function numberFilter(
+  source: string,
+  defaultValue?: number,
+  id: string = uuidv4()
+): SingleFilterConfig {
   const operators: Array<FilterOperator<NumberOperator>> = [
-    { value: 'eq', label: labelMap.eq, type: 'single' },
-    { value: 'neq', label: labelMap.neq, type: 'single' },
-    { value: 'gt', label: labelMap.gt, type: 'single' },
-    { value: 'lt', label: labelMap.lt, type: 'single' },
-    { value: 'gte', label: labelMap.gte, type: 'single' },
-    { value: 'lte', label: labelMap.lte, type: 'single' }
+    { value: 'eq', operatorLabel: labelMap.eq, type: 'single' },
+    { value: 'neq', operatorLabel: labelMap.neq, type: 'single' },
+    { value: 'gt', operatorLabel: labelMap.gt, type: 'single' },
+    { value: 'lt', operatorLabel: labelMap.lt, type: 'single' },
+    { value: 'gte', operatorLabel: labelMap.gte, type: 'single' },
+    { value: 'lte', operatorLabel: labelMap.lte, type: 'single' }
   ];
   const numberFilterConfig: SingleFilterConfig = {
-    operators: operators,
+    id,
+    source,
+    validOperators: operators,
     filterType: 'number',
+    value: defaultValue || 0,
     defaultValue: defaultValue || 0
   };
   return numberFilterConfig;
 }
 
-export function booleanFilter(): SingleFilterConfig {
+export function booleanFilter(source: string, id: string = uuidv4()): SingleFilterConfig {
   const operators: Array<FilterOperator<BooleanOperator>> = [
-    { value: 'eq', label: labelMap.eq, type: 'single' }
+    { value: 'eq', operatorLabel: labelMap.eq, type: 'single' }
   ];
   const booleanFilterConfig: SingleFilterConfig = {
-    operators: operators,
+    id,
+    source,
+    validOperators: operators,
     filterType: 'boolean',
+    value: false,
     defaultValue: false
   };
   return booleanFilterConfig;
