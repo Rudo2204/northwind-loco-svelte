@@ -5,8 +5,8 @@
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
   const filters: FiltersConfig = {
-    unitprice: numberFilter(),
-    is_discontinued: booleanFilter()
+    unitprice: numberFilter('unitprice'),
+    is_discontinued: booleanFilter('is_discontinued')
   };
 </script>
 
