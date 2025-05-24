@@ -13,4 +13,4 @@ export { ListTable, Table } from './table';
 /* Filters */
 export { textFilter, numberFilter, booleanFilter } from './filters';
 export type { FiltersConfig, SingleFilterConfig } from './filters';
-export { PlaceholderFilter } from './filters';
+export { PlaceholderFilter, NumberFilter, StringFilter, BooleanFilter } from './filters';
