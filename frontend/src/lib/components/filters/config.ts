@@ -1,11 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 
-type StringOperator = 'eq' | 'neq' | 'q';
-type NumberOperator = 'eq' | 'neq' | 'gt' | 'lt' | 'gte' | 'lte';
-type BooleanOperator = 'eq';
-type PlaceholderOperator = 'eq';
+export type StringOperator = 'eq' | 'neq' | 'q';
+export type NumberOperator = 'eq' | 'neq' | 'gt' | 'lt' | 'gte' | 'lte';
+export type BooleanOperator = 'eq';
+export type PlaceholderOperator = 'eq';
 
-type ComparisonOperator = StringOperator | NumberOperator | BooleanOperator | PlaceholderOperator;
+export type ComparisonOperator =
+  | StringOperator
+  | NumberOperator
+  | BooleanOperator
+  | PlaceholderOperator;
 type FilterType = 'string' | 'number' | 'boolean' | 'placeholder';
 
 export const labelMap: Record<string, string> = {
@@ -30,7 +34,7 @@ export interface SingleFilterConfig {
   source: string | null;
   filterType: FilterType;
   validOperators: Array<FilterOperator>;
-  operator?: FilterOperator;
+  operator?: ComparisonOperator;
   value: string | number | boolean | undefined;
   defaultValue: string | number | boolean | undefined;
 }
