@@ -31,7 +31,7 @@ export interface FilterOperator<T = ComparisonOperator> {
 
 export interface SingleFilterConfig {
   id: string;
-  source: string | null;
+  source: string;
   filterType: FilterType;
   validOperators: Array<FilterOperator>;
   operator?: ComparisonOperator;
@@ -45,7 +45,7 @@ export function placeholderFilter(id: string = uuidv4()): SingleFilterConfig {
   const operators: Array<FilterOperator<PlaceholderOperator>> = [];
   const textFilterConfig: SingleFilterConfig = {
     id,
-    source: null,
+    source: 'placeholder',
     validOperators: operators,
     filterType: 'placeholder',
     value: '',
