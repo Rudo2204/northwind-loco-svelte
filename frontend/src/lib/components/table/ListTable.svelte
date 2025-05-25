@@ -1,7 +1,10 @@
 <script lang="ts" generics="T">
+  import { page } from '$app/state';
+  import { goto } from '$app/navigation';
   import type { Snippet } from 'svelte';
   import type { BaseCollectionResponse } from '$lib/shared/responses';
   import type { FiltersConfig, SingleFilterConfig } from '$lib/components';
+  import { getPaginationUrlParams } from '$lib/shared/queries';
   import Table from './Table.svelte';
   import { FunnelIcon } from '$lib/components/icons';
   import {
@@ -12,6 +15,7 @@
     StringFilter
   } from '$lib/components/filters';
   import remove from 'lodash/remove';
+  import queryString from 'query-string';
 
   let {
     data,
@@ -38,6 +42,32 @@
 
   function removeFilter(id: string) {
     remove(displayedFilters, ['id', id]);
+  }
+
+  function applyFilter() {
+    let searchParams = page.url.searchParams;
+    const paginationParams = getPaginationUrlParams(searchParams);
+    const qs = Object.create(null);
+
+    for (const filt of $state.snapshot(displayedFilters)) {
+      if (filt.filterType === 'placeholder') {
+        continue;
+      }
+
+      if (filt.filterType === 'boolean') {
+        qs[filt.source] = filt.value;
+      } else {
+        if (!filt.operator) {
+          continue;
+        }
+        qs[`${filt.source}_${filt.operator}`] = String(filt.value);
+      }
+    }
+
+    qs['page'] = String(paginationParams.page);
+    qs['page_size'] = String(paginationParams.pageSize);
+    const href = `${page.url.pathname}?${queryString.stringify(qs)}`;
+    goto(href, { invalidateAll: true });
   }
 </script>
 
@@ -79,7 +109,7 @@
             <div class="flex pt-2">
               <button class="btn" onclick={() => addPlaceholderFilter()}> Add Filter </button>
               <div class="flex flex-1"></div>
-              <button class="btn flex justify-end">Apply</button>
+              <button class="btn flex justify-end" onclick={applyFilter}>Apply</button>
             </div>
           </ul>
         </details>
