@@ -36,7 +36,7 @@ export abstract class OrderPageHelper {
     return { data: transformedResponse, message };
   }
 
-  static async getOrderCollection(search?: URLSearchParams) {
+  static async getOrderCollection(search: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
     const response = await new OrderConsumer().getList(query);
     const { data, message } = throwOrReturnResults(response);

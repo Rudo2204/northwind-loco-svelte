@@ -7,7 +7,7 @@ export abstract class ShipperPageHelper {
     return throwOrReturnResults(response);
   }
 
-  static async getShipperCollection(search?: URLSearchParams) {
+  static async getShipperCollection(search: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
     const response = await new ShipperConsumer().getList(query);
     return throwOrReturnResults(response);

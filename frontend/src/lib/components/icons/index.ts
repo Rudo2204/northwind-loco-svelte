@@ -10,3 +10,5 @@ export { default as ChevronDownIcon } from './ChevronDownIcon.svelte';
 export { default as ChevronLeftIcon } from './ChevronLeftIcon.svelte';
 export { default as ChevronRightIcon } from './ChevronRightIcon.svelte';
 export { default as ArrowsRightLeftIcon } from './ArrowsRightLeftIcon.svelte';
+export { default as FunnelIcon } from './FunnelIcon.svelte';
+export { default as TrashIcon } from './TrashIcon.svelte';

@@ -1,8 +1,13 @@
 <script lang="ts">
-  import { SeoHead, ListTable } from '$lib/components';
+  import { SeoHead, ListTable, numberFilter, booleanFilter } from '$lib/components';
+  import type { FiltersConfig } from '$lib/components';
   import type { ProductResponse } from '$lib/shared/responses';
   import type { PageData } from './$types';
   const { data }: { data: PageData } = $props();
+  const filters: FiltersConfig = {
+    unitprice: numberFilter('unitprice'),
+    is_discontinued: booleanFilter('is_discontinued')
+  };
 </script>
 
 {#snippet row(product: ProductResponse)}
@@ -22,4 +27,5 @@
   title="Products"
   header={['Name', 'Qt per unit', 'Price', 'Stock', 'Orders']}
   {row}
+  {filters}
 />

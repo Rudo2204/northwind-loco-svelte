@@ -7,7 +7,7 @@ export abstract class ProductPageHelper {
     return throwOrReturnResults(response);
   }
 
-  static async getProductCollection(search?: URLSearchParams) {
+  static async getProductCollection(search: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
     const response = await new ProductConsumer().getList(query);
     return throwOrReturnResults(response);

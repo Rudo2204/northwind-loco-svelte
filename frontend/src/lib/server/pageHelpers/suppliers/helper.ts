@@ -7,7 +7,7 @@ export abstract class SupplierPageHelper {
     return throwOrReturnResults(response);
   }
 
-  static async getSupplierCollection(search?: URLSearchParams) {
+  static async getSupplierCollection(search: URLSearchParams) {
     const query = PaginationQueries.getPaginationQuery(search);
     const response = await new SupplierConsumer().getList(query);
     return throwOrReturnResults(response);
